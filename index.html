@@ -1,0 +1,1381 @@
+<title>Icon's Recipe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Archivo:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --ink:#131009;
+    --surface:#1d1811;
+    --surface-2:#26201a;
+    --surface-3:#2f2721;
+    --line:#3a2f20;
+    --line-soft:#2a2318;
+    --gold:#c7a257;
+    --gold-bright:#e8c572;
+    --verdigris:#5c8577;
+    --oxide:#a34b3e;
+    --text:#efe6d3;
+    --text-dim:#b8a98a;
+    --text-faint:#7a6f58;
+
+    --c-science:#6e9c8f;
+    --c-art:#c97b4a;
+    --c-music:#b25d6b;
+    --c-leaders:#c7a257;
+    --c-thinkers:#7c8a99;
+    --c-writers:#8a7ca8;
+    --c-explorers:#4e88a2;
+    --c-sports:#7fa35c;
+    --c-icons:#9b7fa8;
+    --c-elements:#7a6f58;
+
+    --tier-notable:#8a7d63;
+    --tier-renowned:#6ea3c9;
+    --tier-legendary:#e8c572;
+    --tier-mythic:#f0507a;
+
+    --shadow-lift: 0 10px 30px -12px rgba(0,0,0,.6);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--text);
+    font-family:'Archivo',ui-sans-serif,system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow:hidden;
+    -webkit-user-select:none; user-select:none;
+  }
+  ::selection{background:var(--gold); color:var(--ink);}
+  h1,h2,h3,h4,.display{ font-family:'Fraunces',Georgia,'Noto Serif KR',serif; text-wrap:balance; }
+  .mono{ font-family:'Space Mono',ui-monospace,monospace; }
+  button{ font-family:inherit; }
+  input{ user-select:text; }
+
+  .app{
+    position:relative;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    background:
+      radial-gradient(1200px 600px at 15% -10%, rgba(199,162,87,.06), transparent 60%),
+      radial-gradient(900px 500px at 100% 110%, rgba(92,133,119,.07), transparent 60%),
+      var(--ink);
+  }
+
+  header.top{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:12px 20px;
+    border-bottom:1px solid var(--line-soft);
+    background:linear-gradient(180deg, rgba(29,24,17,.9), rgba(29,24,17,.55));
+    backdrop-filter:blur(6px);
+    flex-shrink:0;
+    z-index:20;
+  }
+  .wordmark{ display:flex; align-items:baseline; gap:8px; white-space:nowrap; }
+  .wordmark .mark{ font-size:19px; font-weight:700; letter-spacing:.01em; }
+  .wordmark .mark em{ font-style:italic; color:var(--gold-bright); }
+  .wordmark .tag{ display:none; color:var(--text-faint); font-size:11px; letter-spacing:.08em; text-transform:uppercase; }
+  @media (min-width:1100px){ .wordmark .tag{ display:inline; } }
+
+  .hof-btn{
+    display:flex; align-items:center; gap:7px;
+    border:1px solid var(--c-icons);
+    background:linear-gradient(180deg, rgba(155,127,168,.16), rgba(155,127,168,.05));
+    color:var(--text);
+    padding:7px 12px;
+    border-radius:999px;
+    font-size:12px;
+    cursor:pointer;
+    white-space:nowrap;
+    flex-shrink:0;
+  }
+  .hof-btn:hover{ border-color:var(--gold-bright); }
+  .hof-btn b{ color:var(--gold-bright); }
+
+  .search-wrap{ flex:1; max-width:260px; position:relative; }
+  .search-wrap input{ width:100%; background:var(--surface); border:1px solid var(--line); color:var(--text); border-radius:8px; padding:9px 12px 9px 32px; font-size:13px; outline:none; }
+  .search-wrap input::placeholder{ color:var(--text-faint); }
+  .search-wrap input:focus{ border-color:var(--gold); box-shadow:0 0 0 3px rgba(199,162,87,.15); }
+  .search-wrap svg{ position:absolute; left:10px; top:50%; transform:translateY(-50%); opacity:.5; pointer-events:none; }
+
+  .top-actions{ display:flex; gap:8px; margin-left:auto; flex-shrink:0; }
+  .btn{ border:1px solid var(--line); background:var(--surface); color:var(--text-dim); padding:8px 12px; border-radius:8px; font-size:12.5px; letter-spacing:.01em; cursor:pointer; display:flex; align-items:center; gap:6px; transition:border-color .15s, color .15s; }
+  .btn:hover{ border-color:var(--gold); color:var(--text); }
+  .btn:focus-visible{ outline:2px solid var(--gold-bright); outline-offset:2px; }
+  .btn svg{ width:14px; height:14px; }
+  .btn-icon-only span{ display:none; }
+  @media (min-width:560px){ .btn-icon-only span{ display:inline; } }
+
+  .layout{ flex:1; display:flex; min-height:0; position:relative; }
+
+  .ledger{
+    width:300px; flex-shrink:0;
+    border-right:1px solid var(--line-soft);
+    background:rgba(24,20,14,.6);
+    display:flex; flex-direction:column; min-height:0;
+    transition:box-shadow .2s, background .2s;
+  }
+
+  .ledger-tabs-wrap{ position:relative; flex-shrink:0; }
+  .ledger-tabs-wrap::after{
+    content:""; position:absolute; top:0; right:0; bottom:0; width:20px;
+    background:linear-gradient(90deg, transparent, rgba(24,20,14,.75));
+    pointer-events:none;
+  }
+  .ledger-tabs{
+    display:flex; gap:6px; padding:12px 12px 8px; overflow-x:auto;
+    scrollbar-width:thin; scrollbar-color:var(--line) transparent;
+  }
+  .ledger-tabs::-webkit-scrollbar{ height:5px; }
+  .ledger-tabs::-webkit-scrollbar-track{ background:transparent; }
+  .ledger-tabs::-webkit-scrollbar-thumb{ background:var(--line); border-radius:4px; }
+  .ledger-tabs::-webkit-scrollbar-thumb:hover{ background:var(--gold); }
+  .tab{ flex-shrink:0; font-size:11px; letter-spacing:.04em; text-transform:uppercase; color:var(--text-faint); background:transparent; border:1px solid var(--line); padding:6px 10px; border-radius:999px; cursor:pointer; white-space:nowrap; }
+  .tab[data-active="true"]{ color:var(--ink); background:var(--tab-color, var(--gold)); border-color:transparent; font-weight:700; }
+
+  .ledger-meta{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:0 14px 8px; font-size:10.5px; color:var(--text-faint); flex-shrink:0;
+  }
+  .ledger-meta .mono b{ color:var(--gold-bright); }
+
+  .ledger-scroll{
+    flex:1; overflow-y:auto; padding:2px 12px 30px; touch-action:pan-y; overscroll-behavior:contain;
+    scrollbar-width:thin; scrollbar-color:var(--line) transparent;
+  }
+  .ledger-scroll::-webkit-scrollbar{ width:5px; }
+  .ledger-scroll::-webkit-scrollbar-track{ background:transparent; }
+  .ledger-scroll::-webkit-scrollbar-thumb{ background:var(--line); border-radius:4px; }
+  .ledger-scroll::-webkit-scrollbar-thumb:hover{ background:var(--gold); }
+  .ledger-group{ margin-bottom:18px; }
+  .ledger-group h3{ font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--text-faint); font-weight:600; margin:0 0 8px 2px; display:flex; align-items:center; gap:6px; }
+  .ledger-group h3 .dot{ width:6px; height:6px; border-radius:50%; background:var(--grp-color, var(--gold)); display:inline-block; }
+  .ledger-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(74px,1fr)); gap:6px; }
+
+  .medallion{ all:unset; box-sizing:border-box; display:flex; flex-direction:column; align-items:center; gap:5px; padding:8px 4px 7px; border-radius:12px; cursor:grab; touch-action:pan-y; text-align:center; position:relative; }
+  .medallion:hover{ background:var(--surface-2); }
+  .medallion:focus-visible{ outline:2px solid var(--gold-bright); outline-offset:2px; }
+  .coin{ width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:19px; background:radial-gradient(circle at 32% 28%, var(--surface-3), var(--surface)); border:1.5px solid var(--line); box-shadow: inset 0 0 0 3px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.04); position:relative; pointer-events:none; }
+  .medallion.discovered .coin{ border-color:var(--coin-color, var(--gold)); box-shadow: inset 0 0 0 3px rgba(0,0,0,.3), 0 0 0 1px rgba(199,162,87,.15); }
+  .medallion.discovered.tier-legendary .coin{ box-shadow: inset 0 0 0 3px rgba(0,0,0,.25), 0 0 10px 1px rgba(232,197,114,.5); }
+  .medallion.discovered.tier-mythic .coin{ box-shadow: inset 0 0 0 3px rgba(0,0,0,.2), 0 0 14px 2px rgba(240,80,122,.55); animation:shimmerSlow 5s ease-in-out infinite; }
+  .medallion.locked .coin{ color:var(--text-faint); font-family:'Fraunces',serif; font-style:italic; opacity:.5; border-style:dashed; }
+  .medallion.locked.person-slot .coin{ opacity:.4; font-style:normal; }
+  .medallion .lbl{ font-size:10px; line-height:1.15; color:var(--text-dim); max-width:72px; pointer-events:none; }
+  .medallion.locked .lbl{ color:var(--text-faint); }
+  .medallion.discovered .lbl{ color:var(--text); }
+  .person-mark{
+    position:absolute; bottom:-3px; right:-3px; width:15px; height:15px; border-radius:50%;
+    background:var(--surface-2); border:1.5px solid var(--coin-color,var(--tier-notable));
+    display:flex; align-items:center; justify-content:center; box-shadow:0 1px 4px rgba(0,0,0,.55); z-index:1;
+  }
+  .person-mark.tier-renowned{ width:16px; height:16px; box-shadow:0 1px 4px rgba(0,0,0,.55), 0 0 6px rgba(110,163,201,.4); }
+  .person-mark.tier-legendary{ width:18px; height:18px; box-shadow:0 1px 4px rgba(0,0,0,.55), 0 0 9px rgba(232,197,114,.55); }
+  .person-mark.tier-mythic{ width:20px; height:20px; box-shadow:0 1px 4px rgba(0,0,0,.55), 0 0 11px rgba(240,80,122,.65); animation:shimmerSlow 4.6s ease-in-out infinite; }
+  .token .person-mark{ bottom:-2px; right:-2px; width:19px; height:19px; }
+  .token .person-mark.tier-renowned{ width:21px; height:21px; }
+  .token .person-mark.tier-legendary{ width:23px; height:23px; }
+  .token .person-mark.tier-mythic{ width:26px; height:26px; animation:none; }
+  .medallion.discovered.tier-renowned .coin{ box-shadow: inset 0 0 0 3px rgba(0,0,0,.28), 0 0 8px 1px rgba(110,163,201,.4); }
+
+  @keyframes shimmer{ 0%,100%{ filter:brightness(1); } 50%{ filter:brightness(1.4); } }
+  @keyframes shimmerSlow{ 0%,100%{ filter:brightness(1); } 50%{ filter:brightness(1.15); } }
+
+  .empty-note{ color:var(--text-faint); font-size:12px; padding:20px 8px; text-align:center; line-height:1.6; }
+
+  .workbench{ flex:1; position:relative; min-width:0; overflow:hidden; }
+  .workbench-surface{ position:absolute; inset:0; background: radial-gradient(circle at 50% 45%, rgba(199,162,87,.05), transparent 45%), var(--ink); overflow:hidden; touch-action:none; }
+  .workbench-surface svg.etch{ position:absolute; inset:0; width:100%; height:100%; opacity:.35; pointer-events:none; -webkit-user-drag:none; }
+
+  .wb-empty{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; padding:20px; }
+  .wb-empty-inner{ text-align:center; max-width:360px; color:var(--text-faint); }
+  .wb-empty-inner .coin{ width:56px;height:56px;font-size:26px;margin:0 auto 14px; }
+  .wb-empty-inner h2{ font-size:19px; color:var(--text-dim); margin:0 0 8px; font-weight:600; }
+  .wb-empty-inner p{ font-size:12.5px; line-height:1.6; margin:0; }
+  .wb-empty-inner p b{ color:var(--gold-bright); font-weight:600; }
+
+  .token{ position:absolute; left:0; top:0; display:flex; flex-direction:column; align-items:center; gap:4px; cursor:grab; touch-action:none; will-change:transform; }
+  .token .coin{ width:56px; height:56px; font-size:25px; box-shadow: inset 0 0 0 3px rgba(0,0,0,.3), var(--shadow-lift); border-width:2px; border-color:var(--coin-color, var(--gold)); }
+  .token .lbl{ font-size:11px; background:rgba(19,16,9,.85); padding:2px 7px; border-radius:999px; color:var(--text); white-space:nowrap; border:1px solid var(--line-soft); pointer-events:none; }
+  .token.lifted{ filter:drop-shadow(0 14px 20px rgba(0,0,0,.5)); }
+  .token.lifted .coin{ cursor:grabbing; }
+  .token.person .coin{ background:radial-gradient(circle at 32% 28%, #2f271b, #1d1811); }
+  .token.tier-renowned .coin{ box-shadow: inset 0 0 0 3px rgba(0,0,0,.28), var(--shadow-lift), 0 0 10px 1px rgba(110,163,201,.35); }
+  .token.tier-legendary .coin{ box-shadow: inset 0 0 0 3px rgba(0,0,0,.25), var(--shadow-lift), 0 0 14px 2px rgba(232,197,114,.5); }
+  .token.tier-mythic .coin{ box-shadow: inset 0 0 0 3px rgba(0,0,0,.2), var(--shadow-lift), 0 0 18px 3px rgba(240,80,122,.55); }
+  .token.miss .coin{ animation:shake .32s ease; }
+  .token.mint .coin{ animation:mint .7s cubic-bezier(.2,.9,.3,1); }
+  .token.mint-ring::after{ content:""; position:absolute; inset:-8px; border-radius:50%; border:2px solid var(--coin-color,var(--gold-bright)); animation:ring .7s ease-out forwards; }
+  .token.mint-ring.tier-legendary::after{ inset:-12px; border-width:3px; animation-duration:1s; }
+  .token.mint-ring.tier-mythic::after{ inset:-16px; border-width:3px; animation-duration:1.3s; }
+  .token.delete-target{ opacity:.35; }
+  .token.fixed-drag{ position:fixed; z-index:999; }
+
+  @keyframes shake{ 0%,100%{ transform:translateX(0); } 25%{ transform:translateX(-4px); } 75%{ transform:translateX(4px); } }
+  @keyframes mint{ 0%{ transform:scale(.6); filter:brightness(2.2); } 55%{ transform:scale(1.12); filter:brightness(1.5); } 100%{ transform:scale(1); filter:brightness(1); } }
+  @keyframes ring{ 0%{ opacity:1; transform:scale(.6); } 100%{ opacity:0; transform:scale(2.4); } }
+
+  .drag-ghost{ position:fixed; z-index:999; pointer-events:none; transform:translate(-50%,-50%); display:flex; flex-direction:column; align-items:center; gap:4px; }
+  .drag-ghost .coin{ width:54px; height:54px; font-size:24px; box-shadow: 0 16px 30px -8px rgba(0,0,0,.7); border-width:2px; }
+  .drag-ghost .lbl{ font-size:11px; background:rgba(19,16,9,.9); padding:2px 8px; border-radius:999px; color:var(--text); border:1px solid var(--line-soft); }
+
+  .wb-toolbar{ position:absolute; bottom:16px; left:50%; transform:translateX(-50%); display:flex; gap:8px; z-index:15; }
+
+  #toastLayer{ position:fixed; top:66px; right:16px; display:flex; flex-direction:column; gap:8px; z-index:200; pointer-events:none; }
+  .toast{ background:linear-gradient(180deg, var(--surface-2), var(--surface)); border:1px solid var(--gold); border-radius:10px; padding:10px 14px; display:flex; align-items:center; gap:10px; box-shadow:var(--shadow-lift); min-width:210px; max-width:270px; animation:toastIn .35s ease; }
+  .toast .coin{ width:32px;height:32px;font-size:15px;flex-shrink:0; }
+  .toast .tt-title{ font-size:10px; text-transform:uppercase; letter-spacing:.06em; color:var(--gold-bright); margin:0 0 2px; display:flex; gap:6px; align-items:center; }
+  .toast .tt-name{ font-size:13px; font-weight:600; color:var(--text); }
+  .toast .streak{ font-size:9.5px; color:var(--oxide); font-weight:700; background:rgba(163,75,62,.15); padding:1px 6px; border-radius:999px; }
+  @keyframes toastIn{ from{ opacity:0; transform:translateX(14px); } to{ opacity:1; transform:translateX(0); } }
+  .toast.leaving{ animation:toastOut .3s ease forwards; }
+  @keyframes toastOut{ to{ opacity:0; transform:translateX(14px); } }
+
+  .overlay-backdrop{ position:fixed; inset:0; background:rgba(10,8,5,.72); backdrop-filter:blur(3px); z-index:400; display:flex; align-items:center; justify-content:center; padding:20px; animation:fadeIn .25s ease; overflow:hidden; }
+  @keyframes fadeIn{ from{opacity:0;} to{opacity:1;} }
+  .overlay-backdrop.tier-legendary::before, .overlay-backdrop.tier-mythic::before{
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(circle at 50% 42%, var(--flash-color), transparent 62%);
+    animation:flashPop .6s ease-out forwards;
+  }
+  .overlay-backdrop.tier-legendary::before{ --flash-color:rgba(232,197,114,.5); }
+  .overlay-backdrop.tier-mythic::before{ --flash-color:rgba(240,80,122,.55); animation-duration:.8s; }
+  @keyframes flashPop{ 0%{ opacity:1; } 100%{ opacity:0; } }
+
+  .reveal-card{ position:relative; width:min(380px,100%); background:linear-gradient(180deg, var(--surface-2), var(--surface)); border:1.5px solid var(--coin-color,var(--gold)); border-radius:18px; padding:38px 26px 26px; text-align:center; box-shadow:0 30px 80px -20px rgba(0,0,0,.7); animation:cardIn .45s cubic-bezier(.2,.9,.25,1); }
+  .reveal-card.tier-legendary{ box-shadow:0 30px 80px -20px rgba(0,0,0,.7), 0 0 60px -10px rgba(232,197,114,.35); }
+  .reveal-card.tier-mythic{ box-shadow:0 30px 80px -20px rgba(0,0,0,.7), 0 0 80px -6px rgba(240,80,122,.45); animation:cardIn .45s cubic-bezier(.2,.9,.25,1), cardPulseMythic 2s ease-in-out 1s infinite; }
+  @keyframes cardIn{ from{ transform:scale(.85) translateY(10px); opacity:0; } to{ transform:scale(1) translateY(0); opacity:1; } }
+  @keyframes cardPulseMythic{ 0%,100%{ box-shadow:0 30px 80px -20px rgba(0,0,0,.7), 0 0 80px -6px rgba(240,80,122,.45); } 50%{ box-shadow:0 30px 80px -20px rgba(0,0,0,.7), 0 0 100px 0px rgba(240,80,122,.65); } }
+  .rc-clip{ position:absolute; inset:0; border-radius:18px; overflow:hidden; pointer-events:none; }
+  .reveal-card .burst{ position:absolute; inset:-40%; background:conic-gradient(from -45deg, transparent, rgba(138,125,99,.1), transparent 34%); }
+  .reveal-card.tier-renowned .burst{ background:conic-gradient(from -45deg, transparent, rgba(110,163,201,.18), transparent 28%); }
+  .reveal-card.tier-legendary .burst{ background:conic-gradient(from -45deg, transparent, rgba(232,197,114,.26), transparent 24%); }
+  .reveal-card.tier-mythic .burst{ background:conic-gradient(from -45deg, transparent, rgba(240,80,122,.32), transparent 20%); }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  .reveal-card .rc-inner{ position:relative; }
+
+  .rc-banner{
+    position:absolute; top:-16px; left:50%; transform:translateX(-50%);
+    padding:6px 18px; border-radius:999px; font-size:10.5px; font-weight:800;
+    text-transform:uppercase; letter-spacing:.1em; white-space:nowrap; z-index:3;
+    box-shadow:0 6px 16px rgba(0,0,0,.45);
+  }
+  .rc-banner.tier-notable{ background:var(--tier-notable); color:#1c1710; }
+  .rc-banner.tier-renowned{ background:var(--tier-renowned); color:#0c1c26; padding:7px 20px; font-size:11px; }
+  .rc-banner.tier-legendary{
+    background:linear-gradient(135deg, var(--tier-legendary), var(--gold-bright)); color:#2b2109;
+    padding:8px 24px; font-size:12.5px; top:-19px;
+  }
+  .rc-banner.tier-mythic{
+    background:linear-gradient(135deg, var(--tier-mythic), #ff9fb8); color:#3a0716;
+    padding:9px 28px; font-size:13.5px; top:-22px; letter-spacing:.14em;
+  }
+
+  .reveal-coin-wrap{ position:relative; width:100px; height:100px; margin:0 auto 16px; }
+  .sparkle{ position:absolute; font-size:11px; color:var(--coin-color); opacity:0; animation:sparkleTwinkle 1.8s ease-in-out infinite; pointer-events:none; }
+  @keyframes sparkleTwinkle{ 0%,100%{ opacity:0; transform:scale(.3) rotate(0deg); } 50%{ opacity:1; transform:scale(1) rotate(90deg); } }
+
+  .reveal-coin{ width:100px; height:100px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:46px; background:radial-gradient(circle at 32% 28%, #362c1e, #1d1811); border:3px solid var(--coin-color,var(--gold)); box-shadow:0 0 0 5px rgba(138,125,99,.1), 0 0 16px rgba(138,125,99,.22); position:relative; animation:revealPop .6s cubic-bezier(.2,.9,.25,1); }
+  .reveal-card.tier-renowned .reveal-coin{ box-shadow:0 0 0 6px rgba(110,163,201,.18), 0 0 32px rgba(110,163,201,.42); }
+  .reveal-card.tier-legendary .reveal-coin{ box-shadow:0 0 0 7px rgba(232,197,114,.22), 0 0 46px rgba(232,197,114,.58); animation:revealPop .6s cubic-bezier(.2,.9,.25,1), shimmer 2.2s ease-in-out .6s infinite; }
+  .reveal-card.tier-mythic .reveal-coin{ box-shadow:0 0 0 9px rgba(240,80,122,.2), 0 0 60px rgba(240,80,122,.65); animation:revealPop .6s cubic-bezier(.2,.9,.25,1), shimmer 1.5s ease-in-out .6s infinite; }
+  @keyframes revealPop{ 0%{ transform:scale(.4) rotate(-8deg); } 60%{ transform:scale(1.08) rotate(3deg); } 100%{ transform:scale(1) rotate(0); } }
+  .reveal-coin::after{ content:""; position:absolute; inset:-10px; border-radius:50%; border:1.5px solid var(--coin-color,var(--gold)); opacity:.6; animation:ring 1.1s ease-out .1s; }
+  .reveal-card.tier-legendary .reveal-coin::after{ inset:-13px; border-width:2px; animation:ring 1.3s ease-out .1s; }
+  .reveal-card.tier-mythic .reveal-coin::after{ content:""; inset:-17px; border-width:2px; animation:ring 1.6s ease-out .1s, ringPulse 1.9s ease-in-out .8s infinite; }
+  @keyframes ringPulse{ 0%,100%{ opacity:.35; transform:scale(1); } 50%{ opacity:.75; transform:scale(1.06); } }
+  .reveal-card h3{ font-size:25px; margin:6px 0 6px; }
+  .reveal-badges{ display:flex; gap:6px; justify-content:center; margin-bottom:16px; flex-wrap:wrap; }
+  .badge{ font-size:10px; text-transform:uppercase; letter-spacing:.05em; padding:3px 9px; border-radius:999px; border:1px solid var(--line); color:var(--text-dim); }
+  .badge.cat{ border-color:var(--cat-color,var(--gold)); color:var(--cat-color,var(--gold)); }
+  .badge.era-living{ border-color:var(--verdigris); color:var(--verdigris); }
+  .badge.tier-notable{ border-color:var(--tier-notable); color:var(--tier-notable); }
+  .badge.tier-renowned{ border-color:var(--tier-renowned); color:var(--tier-renowned); }
+  .badge.tier-legendary{ border-color:var(--tier-legendary); color:var(--tier-legendary); background:rgba(232,197,114,.08); }
+  .badge.tier-mythic{ border-color:var(--tier-mythic); color:var(--tier-mythic); background:rgba(240,80,122,.1); }
+  .badge b{ font-weight:800; }
+  .reveal-quote{ font-family:'Fraunces',serif; font-style:italic; font-size:16px; line-height:1.5; color:var(--text); margin:0 0 10px; text-wrap:balance; }
+  .reveal-quote::before,.reveal-quote::after{ content:'"'; color:var(--gold); }
+  .reveal-blurb{ font-size:12px; color:var(--text-dim); line-height:1.5; margin:0 0 20px; }
+  .reveal-close{ background:linear-gradient(180deg, var(--gold-bright), var(--gold)); color:#241c0f; border:none; padding:10px 24px; border-radius:999px; font-weight:700; font-size:13px; cursor:pointer; }
+  .reveal-close:hover{ filter:brightness(1.06); }
+
+  .hof-backdrop{ position:fixed; inset:0; background:rgba(10,8,5,.8); z-index:350; display:flex; justify-content:center; padding:40px 16px; overflow-y:auto; animation:fadeIn .2s ease; }
+  .hof-panel{ width:min(980px,100%); background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:26px 22px 34px; height:fit-content; box-shadow:var(--shadow-lift); }
+  .hof-head{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:18px; flex-wrap:wrap; }
+  .hof-head h2{ font-size:24px; margin:0; }
+  .hof-head p{ margin:2px 0 0; color:var(--text-faint); font-size:12px; }
+  .hof-close{ background:transparent; border:1px solid var(--line); color:var(--text-dim); width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:16px; line-height:1; }
+  .hof-close:hover{ border-color:var(--gold); color:var(--text); }
+  .hof-tierlegend{ display:flex; gap:14px; flex-wrap:wrap; margin-bottom:18px; font-size:10.5px; color:var(--text-faint); }
+  .hof-tierlegend span{ display:flex; align-items:center; gap:5px; }
+  .hof-tierlegend i{ width:7px; height:7px; border-radius:50%; display:inline-block; }
+  .hof-section{ margin-bottom:28px; }
+  .hof-section:last-child{ margin-bottom:4px; }
+  .hof-section-head{
+    display:flex; align-items:center; gap:8px; font-size:15px; margin:0 0 12px; padding-bottom:8px;
+    border-bottom:1px solid var(--line-soft);
+  }
+  .hof-section-head.tier-notable{ color:var(--tier-notable); }
+  .hof-section-head.tier-renowned{ color:var(--tier-renowned); }
+  .hof-section-head.tier-legendary{ color:var(--tier-legendary); }
+  .hof-section-head.tier-mythic{ color:var(--tier-mythic); }
+  .hof-section-count{ margin-left:auto; font-size:11px; color:var(--text-faint); font-weight:400; }
+  .hof-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(150px,1fr)); gap:13px; }
+  .hof-card{
+    border:1.5px solid var(--line); border-radius:12px; padding:20px 10px 14px; text-align:center;
+    background:var(--surface-2); position:relative; overflow:hidden;
+  }
+  .hof-card.tier-notable{ border-color:rgba(138,125,99,.55); }
+  .hof-card.tier-renowned{ border-color:rgba(110,163,201,.55); box-shadow:0 0 10px -4px rgba(110,163,201,.35); }
+  .hof-card.tier-legendary{ border-color:rgba(232,197,114,.65); animation:cardGlowLegendary 5.5s ease-in-out infinite; }
+  .hof-card.tier-mythic{ border-color:rgba(240,80,122,.7); animation:cardGlowMythic 4.5s ease-in-out infinite; }
+  .hof-card.locked{ opacity:.5; animation:none !important; box-shadow:none !important; }
+  .hof-card.tier-legendary::before, .hof-card.tier-mythic::before{
+    content:""; position:absolute; inset:0; pointer-events:none; border-radius:11px;
+    background:linear-gradient(115deg, transparent 30%, rgba(255,255,255,.14) 46%, rgba(255,255,255,.24) 50%, rgba(255,255,255,.14) 54%, transparent 70%);
+    background-size:260% 260%;
+    animation:sheen 7s ease-in-out infinite;
+  }
+  .hof-card.locked::before{ content:none; }
+  @keyframes sheen{ 0%{ background-position:220% 0; } 35%{ background-position:-60% 0; } 100%{ background-position:-60% 0; } }
+  @keyframes cardGlowLegendary{ 0%,100%{ box-shadow:0 0 14px -5px rgba(232,197,114,.3); } 50%{ box-shadow:0 0 19px -1px rgba(232,197,114,.45); } }
+  @keyframes cardGlowMythic{ 0%,100%{ box-shadow:0 0 16px -4px rgba(240,80,122,.4); } 50%{ box-shadow:0 0 24px 0px rgba(240,80,122,.58); } }
+  .hc-badge{
+    position:absolute; top:8px; left:8px; font-size:8px; font-weight:800; text-transform:uppercase;
+    letter-spacing:.04em; padding:2px 6px; border-radius:5px; z-index:1;
+  }
+  .hc-badge.tier-notable{ color:var(--tier-notable); background:rgba(138,125,99,.16); }
+  .hc-badge.tier-renowned{ color:var(--tier-renowned); background:rgba(110,163,201,.16); }
+  .hc-badge.tier-legendary{ color:var(--tier-legendary); background:rgba(232,197,114,.2); }
+  .hc-badge.tier-mythic{ color:var(--tier-mythic); background:rgba(240,80,122,.2); }
+  .hof-card .coin{ width:50px;height:50px;font-size:23px;margin:0 auto 8px; position:relative; }
+  .hof-card .hc-name{ font-size:12px; font-weight:600; margin-bottom:4px; display:flex; align-items:center; justify-content:center; gap:1px; }
+  .hc-orn{ display:inline-flex; flex-shrink:0; opacity:.9; }
+  .hc-orn svg{ display:block; }
+  .hof-card .hc-cat{ font-size:9.5px; text-transform:uppercase; letter-spacing:.05em; margin-bottom:6px; opacity:.85; }
+  .hof-card .hc-quote{ font-family:'Fraunces',serif; font-style:italic; font-size:10.5px; color:var(--text-dim); line-height:1.4; position:relative; }
+  .hof-card.locked .hc-name{ color:var(--text-faint); }
+
+  /* ---------- combo popover (right-click / long-press) ---------- */
+  .combo-pop{
+    position:fixed; z-index:500; width:250px;
+    background:linear-gradient(180deg, var(--surface-2), var(--surface));
+    border:1px solid var(--gold); border-radius:12px; padding:14px 16px;
+    box-shadow:var(--shadow-lift); animation:fadeIn .15s ease;
+  }
+  .combo-pop .cp-eq{ display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:10px; }
+  .combo-pop .coin{ width:34px; height:34px; font-size:15px; }
+  .combo-pop .cp-plus, .combo-pop .cp-eq-sign{ color:var(--text-faint); font-size:14px; font-weight:700; }
+  .combo-pop h4{ margin:0 0 2px; font-size:14px; text-align:center; }
+  .combo-pop .cp-tier{ text-align:center; font-size:10px; text-transform:uppercase; letter-spacing:.05em; font-weight:700; margin-bottom:8px; }
+  .combo-pop p{ margin:0 0 10px; font-size:11.5px; color:var(--text-dim); line-height:1.5; text-align:center; }
+  .combo-pop .cp-actions{ display:flex; gap:6px; }
+  .combo-pop .cp-actions button{ flex:1; font-size:11px; padding:7px; border-radius:7px; border:1px solid var(--line); background:var(--surface); color:var(--text-dim); cursor:pointer; }
+  .combo-pop .cp-actions button:hover{ border-color:var(--gold); color:var(--text); }
+
+  .ledger-toggle{ display:none; }
+  @media (max-width:820px){
+    .ledger{ position:fixed; left:0; right:0; bottom:0; top:auto; height:56%; width:auto; border-right:none; border-top:1px solid var(--line-soft); border-radius:16px 16px 0 0; transform:translateY(calc(100% - 54px)); transition:transform .28s cubic-bezier(.2,.8,.3,1); z-index:60; box-shadow:0 -20px 40px rgba(0,0,0,.5); }
+    .ledger.open{ transform:translateY(0); }
+    .ledger-toggle{ display:flex; align-items:center; justify-content:center; gap:8px; height:54px; flex-shrink:0; color:var(--text-dim); font-size:12.5px; cursor:pointer; border-bottom:1px solid var(--line-soft); touch-action:none; }
+    .ledger-toggle .chev{ transition:transform .28s; }
+    .ledger.open .ledger-toggle .chev{ transform:rotate(180deg); }
+    .wordmark .tag{ display:none; }
+    .medallion .coin{ width:46px; height:46px; font-size:21px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){ *{ animation-duration:.001s !important; transition-duration:.001s !important; } }
+  .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+</style>
+
+<div class="app" id="app">
+  <header class="top">
+    <div class="wordmark">
+      <span class="mark">ICON'S <em>RECIPE</em></span>
+      <span class="tag">Combine history's icons</span>
+    </div>
+    <button class="hof-btn" id="hofBtn" title="Open Hall of Fame">
+      🏛 <b id="personCount">0</b>/<span id="personTotal">0</span> Icons
+    </button>
+    <div class="search-wrap">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="searchInput" type="text" placeholder="Search…" autocomplete="off" />
+    </div>
+    <div class="top-actions">
+      <button class="btn btn-icon-only" id="shareBtn" title="Share your progress">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5 15.4 17.5M15.4 6.5 8.6 10.5"/></svg>
+        <span>Share</span>
+      </button>
+      <button class="btn btn-icon-only" id="resetBtn" title="Reset progress">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
+        <span>Reset</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="ledger" id="ledger">
+      <div class="ledger-toggle" id="ledgerToggle">
+        <span>Codex</span>
+        <svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+      </div>
+      <div class="ledger-tabs-wrap">
+        <div class="ledger-tabs" id="ledgerTabs"></div>
+      </div>
+      <div class="ledger-meta mono">
+        <span id="ledgerMetaText">0/0 discovered</span>
+        <span style="opacity:.6">right-click for recipe</span>
+      </div>
+      <div class="ledger-scroll" id="ledgerScroll"></div>
+    </aside>
+
+    <main class="workbench">
+      <div class="workbench-surface" id="surface">
+        <svg class="etch" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet" draggable="false">
+          <circle cx="200" cy="200" r="150" fill="none" stroke="#c7a257" stroke-width="0.6"/>
+          <circle cx="200" cy="200" r="110" fill="none" stroke="#c7a257" stroke-width="0.4"/>
+          <circle cx="200" cy="200" r="188" fill="none" stroke="#c7a257" stroke-width="0.3"/>
+          <g stroke="#c7a257" stroke-width="0.3">
+            <line x1="200" y1="12" x2="200" y2="388"/>
+            <line x1="12" y1="200" x2="388" y2="200"/>
+            <line x1="53" y1="53" x2="347" y2="347"/>
+            <line x1="347" y1="53" x2="53" y2="347"/>
+          </g>
+        </svg>
+        <div class="wb-empty" id="wbEmpty">
+          <div class="wb-empty-inner">
+            <div class="coin">🔥</div>
+            <h2>The bench is empty</h2>
+            <p>Try <b>Water + Earth</b> first — that's Human, the seed of every icon in this game.</p>
+          </div>
+        </div>
+      </div>
+      <div class="wb-toolbar">
+        <button class="btn" id="clearBtn">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>
+          Clear bench
+        </button>
+      </div>
+    </main>
+  </div>
+
+  <div id="toastLayer"></div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+const CATS = [
+  {id:"elements",  label:"Elements",   color:"var(--c-elements)"},
+  {id:"science",   label:"Science",    color:"var(--c-science)"},
+  {id:"art",       label:"Art",        color:"var(--c-art)"},
+  {id:"music",     label:"Music",      color:"var(--c-music)"},
+  {id:"leaders",   label:"Leaders",    color:"var(--c-leaders)"},
+  {id:"thinkers",  label:"Thinkers",   color:"var(--c-thinkers)"},
+  {id:"writers",   label:"Writers",    color:"var(--c-writers)"},
+  {id:"explorers", label:"Explorers",  color:"var(--c-explorers)"},
+  {id:"sports",    label:"Sports",     color:"var(--c-sports)"},
+  {id:"icons",     label:"Icons",      color:"var(--c-icons)"}
+];
+const TIERS = {
+  notable:  {label:"Notable",   order:0},
+  renowned: {label:"Renowned",  order:1},
+  legendary:{label:"Legendary", order:2},
+  mythic:   {label:"Mythic",    order:3}
+};
+
+/* [id, name, emoji, recipe|null, category, flavor, era?, quote?, why?, tier?] */
+const RAW = [
+  ["fire","Fire","🔥",null,"elements","The first spark."],
+  ["water","Water","💧",null,"elements","Patient. Persistent. Everywhere."],
+  ["earth","Earth","🌍",null,"elements","Solid ground for everything to come."],
+  ["air","Air","💨",null,"elements","Invisible, but it moves everything."],
+
+  ["steam","Steam","♨️",["fire","water"],"elements","Water that changed its mind."],
+  ["lava","Lava","🌋",["fire","earth"],"elements","Earth losing its temper."],
+  ["energy","Energy","⚡",["fire","air"],"elements","Motion looking for a purpose."],
+  ["human","Human","🧑",["water","earth"],"elements","Clay, shaped and given breath."],
+  ["rain","Rain","🌧️",["water","air"],"elements","Water falling with intent."],
+  ["dust","Dust","🌫️",["earth","air"],"elements","Almost nothing, but not quite."],
+  ["sun","Sun","☀️",["fire","fire"],"elements","A fire too big to put out."],
+  ["ocean","Ocean","🌊",["water","water"],"elements","Every drop, all at once."],
+  ["mountain","Mountain","⛰️",["earth","earth"],"elements","Earth with ambition."],
+  ["sky","Sky","🌤️",["air","air"],"elements","Where everything looks small."],
+
+  ["idea","Idea","💡",["human","sun"],"elements","A bright thought, arriving all at once."],
+  ["power","Power","💪",["human","energy"],"elements","Energy with someone's name on it."],
+  ["tears","Tears","😢",["human","water"],"elements","Water that means something."],
+  ["voice","Voice","🗣️",["human","air"],"elements","Breath with a message."],
+  ["passion","Passion","❤️‍🔥",["human","fire"],"elements","Fire that moved indoors."],
+  ["ego","Ego","😤",["human","mountain"],"elements","The view from the top goes to your head."],
+  ["war","War","⚔️",["human","lava"],"elements","A person consumed by their own fire."],
+  ["metal","Metal","⛏️",["mountain","fire"],"elements","Mountain ore, tempered by flame."],
+  ["plant","Plant","🌿",["rain","earth"],"elements","Rain and earth, reaching upward."],
+  ["moon","Moon","🌙",["earth","sky"],"elements","A piece of earth that never came back down."],
+  ["star","Star","⭐",["sun","sky"],"elements","A sun, seen from very far away."],
+  ["ship","Ship","⛵",["ocean","air"],"elements","Wind convinces the sea to carry you."],
+  ["glass","Glass","🔍",["dust","fire"],"elements","Sand that learned to see clearly."],
+  ["gold","Gold","🪙",["mountain","sun"],"elements","Treasure a mountain kept in the sun."],
+  ["bathtub","Bathtub","🛁",["water","metal"],"elements","Water, contained — and where the best ideas happen."],
+  ["wisdom","Wisdom","🧘",["human","ocean"],"elements","As deep as the water it came from."],
+  ["freedom","Freedom","🦅",["human","sky"],"elements","Looking up, and refusing to be caged."],
+  ["fear","Fear","😱",["human","dust"],"elements","Afraid of turning to dust."],
+  ["faith","Faith","🙏",["human","moon"],"elements","Trusting something you can't fully reach."],
+
+  ["art","Art","🎨",["idea","fire"],"elements","An idea that caught fire."],
+  ["quill","Quill","🪶",["idea","air"],"elements","A thought, carried into words."],
+  ["sculpture","Sculpture","🗿",["idea","metal"],"elements","An idea, given form in metal."],
+  ["apple","Apple","🍎",["plant","sun"],"elements","Famous for falling at the right time."],
+  ["sunflower","Sunflower","🌻",["plant","water"],"elements","A plant that follows the light."],
+  ["dove","Dove","🕊️",["air","plant"],"elements","A branch that learned to fly."],
+  ["chains","Chains","⛓️",["metal","earth"],"elements","What gets broken, eventually."],
+  ["sword","Sword","🗡️",["metal","war"],"elements","Metal that picked a side."],
+  ["crown","Crown","👑",["gold","power"],"elements","Power, made official."],
+  ["money","Money","💰",["human","gold"],"elements","Gold, agreed upon."],
+  ["rocket","Rocket","🚀",["metal","moon"],"elements","Metal aimed at the moon."],
+  ["glasses","Glasses","👓",["glass","human"],"elements","Glass, worn on purpose."],
+  ["cloth","Cloth","🧵",["plant","human"],"elements","A plant, rearranged into fashion."],
+  ["grief","Grief","😭",["tears","voice"],"elements","Sadness that had to be said out loud."],
+  ["rebellion","Rebellion","🏴",["passion","war"],"elements","Fire that refused to be told no."],
+  ["speed","Speed","💨",["energy","power"],"elements","Energy that refuses to wait."],
+  ["fame","Fame","🌟",["star","power"],"elements","A star, but everyone's watching it."],
+  ["instrument","Instrument","🎸",["voice","metal"],"elements","A voice, given strings."],
+  ["rhythm","Rhythm","🥁",["voice","energy"],"elements","A voice that found a beat."],
+  ["machine","Machine","⚙️",["metal","power"],"elements","Metal, doing the work for you."],
+  ["discovery","Discovery","🔬",["idea","ocean"],"elements","An idea that went looking, and found something."],
+  ["number","Number","🔢",["idea","dust"],"elements","Counting the uncountable."],
+  ["adventure","Adventure","🗺️",["ship","star"],"elements","Following a star to see where it leads."],
+  ["beauty","Beauty","💄",["art","passion"],"elements","Art, worn on the outside."],
+  ["revolution","Revolution","✊",["war","idea"],"elements","A fight that finally had a plan."],
+
+  ["grace","Grace","💃",["sculpture","passion"],"elements","Passion, poured into perfect form."],
+  ["justice","Justice","⚖️",["chains","idea"],"elements","An idea that breaks chains instead of forging them."],
+  ["empire","Empire","🏰",["crown","chains"],"elements","Power that stopped asking permission."],
+  ["diplomacy","Diplomacy","🤝",["voice","crown"],"elements","Power that learned to talk instead of fight."],
+  ["command","Command","🎖️",["crown","power"],"elements","Authority, given an army."],
+  ["flight","Flight","✈️",["dove","energy"],"elements","Peace, moving very fast."],
+  ["independence","Independence","🔓",["voice","chains"],"elements","A voice loud enough to break chains."],
+  ["letter","Letter","✉️",["quill","voice"],"elements","A voice that learned to travel without you."],
+  ["story","Story","📖",["quill","passion"],"elements","Passion, written down so it outlives you."],
+  ["poem","Poem","📝",["quill","tears"],"elements","Grief, arranged until it sounds beautiful."],
+  ["fairytale","Fairy Tale","🧚",["quill","dove"],"elements","A story gentle enough for the very young."],
+  ["mystery","Mystery","🔎",["glass","voice"],"elements","A voice that won't quite tell you everything."],
+  ["code","Code","🖥️",["idea","machine"],"elements","An idea, taught to a machine."],
+  ["fashion","Fashion","👗",["beauty","cloth"],"elements","Beauty, cut and stitched to fit the moment."],
+  ["camera","Camera","🎥",["art","glass"],"elements","Art that captures a moment instead of making one."],
+  ["cartoon","Cartoon","🖊️",["idea","cloth"],"elements","An idea, drawn a costume."],
+  ["brand","Brand","🏷️",["money","idea"],"elements","An idea, with a price tag."],
+  ["network","Network","🌐",["machine","voice"],"elements","A machine that lets every voice reach every other."],
+  ["elegance","Elegance","✨",["beauty","voice"],"elements","Beauty that knows exactly what to say."],
+  ["record","Record","🏅",["speed","power"],"elements","The moment everyone else became second place."],
+  ["medicine","Medicine","💊",["plant","wisdom"],"elements","Wisdom, applied to a plant."],
+  ["garden","Garden","🌷",["plant","earth"],"elements","Plants, arranged on purpose."],
+  ["pain","Pain","🩹",["tears","fire"],"elements","Tears that burn on the way out."],
+  ["law","Law","⚖️",["quill","power"],"elements","Power, written down so it applies to everyone."],
+  ["mercy","Mercy","🤲",["tears","dove"],"elements","Grief that chose to forgive instead."],
+  ["cave","Cave","🕳️",["mountain","dust"],"elements","A mountain, hollowed out by time."],
+  ["brave","Brave","🦁",["passion","fear"],"elements","Passion that showed up anyway, afraid."],
+  ["time","Time","⏳",["sun","moon"],"elements","A sun and a moon, taking turns."],
+  ["kindness","Kindness","💗",["human","dove"],"elements","A human, choosing to be gentle."],
+  ["comedy","Comedy","🎪",["passion","cartoon"],"elements","Passion that decided to be funny instead."],
+
+  ["einstein","Albert Einstein","👅",["idea","passion"],"science","Stuck his tongue out at a photographer and rewrote physics on the side.","dead","Imagination is more important than knowledge.","A passionate idea, taken to its limit.","mythic"],
+  ["newton","Isaac Newton","🍎",["apple","idea"],"science","One falling apple later, gravity had a rulebook.","dead","To every action, there is an equal reaction.","The apple that started a law of nature.","mythic"],
+  ["darwin","Charles Darwin","🐢",["idea","ship"],"science","Sailed around the world just to prove a point about finches.","dead","It is the most adaptable that survives.","An idea that had to sail the world to be proven.","legendary"],
+  ["curie","Marie Curie","☢️",["power","idea"],"science","Carried glowing test tubes in her pockets and won two Nobel Prizes anyway.","dead","Nothing in life is to be feared, only understood.","An idea powerful enough to glow in the dark.","legendary"],
+  ["tesla","Nikola Tesla","⚡",["energy","idea"],"science","Lit up the modern world and somehow still ended up broke.","dead","The present is theirs; the future is mine.","Raw energy, aimed by a brilliant idea.","renowned"],
+  ["edison","Thomas Edison","💡",["idea","glass"],"science","1% inspiration, 99% aggressively patenting things.","dead","Genius is one percent inspiration, ninety-nine percent perspiration.","An idea, sealed inside glass and lit.","renowned"],
+  ["galileo","Galileo Galilei","🔭",["idea","star"],"science","Insisted the Earth moves. The Church strongly disagreed.","dead","And yet it moves.","An idea that dared to look at the stars.","legendary"],
+  ["hawking","Stephen Hawking","🌌",["idea","moon"],"science","Explained black holes to the rest of us, one synthesized word at a time.","dead","Intelligence is the ability to adapt to change.","An idea vast enough to reach the moon and beyond.","legendary"],
+  ["archimedes","Archimedes","🛁",["idea","bathtub"],"science","Solved a math problem in the bath and ran outside still celebrating.","dead","Eureka!","The idea that arrived in the bathtub.","renowned"],
+  ["copernicus","Nicolaus Copernicus","☀️",["idea","sun"],"science","Quietly moved the entire Earth out of the center of the universe.","dead","To know that we know what we know, and that we do not know what we do not know.","An idea that put the sun back where it belonged.","renowned"],
+  ["pythagoras","Pythagoras","📐",["idea","sculpture"],"science","Turned triangles into a religion and a math class at the same time.","dead","Number is the ruler of forms and ideas.","An idea shaped like a perfect triangle.","notable"],
+  ["turing","Alan Turing","🖥️",["code","idea"],"science","Cracked a war-winning code and helped invent the computer, quietly.","dead","We can only see a short distance ahead, but we can see plenty there that needs to be done.","The idea that taught a machine to think.","renowned"],
+  ["lovelace","Ada Lovelace","🖥️",["code","human"],"science","Wrote the world's first computer program before computers really existed.","dead","That brain of mine is something more than merely mortal.","A human mind, one full step ahead of the machine.","notable"],
+  ["babbage","Charles Babbage","⚙️",["machine","number"],"science","Designed a computer a century before anyone could build one.","dead","Errors using inadequate data are much less than those using no data at all.","A machine built to crunch numbers on its own.","notable"],
+  ["pasteur","Louis Pasteur","🔬",["discovery","medicine"],"science","Proved invisible things could kill you, then figured out how to stop them.","dead","Chance favors the prepared mind.","A discovery that made milk safe to drink.","renowned"],
+  ["nobel","Alfred Nobel","💰",["discovery","money"],"science","Invented dynamite, then spent his fortune apologizing for it.","dead","I am proud of the fact that I never invented a weapon to kill.","A discovery so powerful, it funded its own guilt.","notable"],
+  ["mendel","Gregor Mendel","🌱",["discovery","plant"],"science","Counted thousands of peas so the rest of us could understand genetics.","dead","My scientific studies have afforded me great gratification.","A discovery hiding in a garden of peas.","notable"],
+  ["mendeleev","Dmitri Mendeleev","🔢",["discovery","number"],"science","Arranged every known element into a chart and left gaps for the ones we hadn't found yet.","dead","There is no branch of natural science in which theory could run so far ahead of experimental research as chemistry.","A discovery organized down to the last number.","notable"],
+  ["franklin","Benjamin Franklin","⚡",["discovery","voice"],"science","Flew a kite in a storm and somehow also wrote the nation's founding documents.","dead","An investment in knowledge pays the best interest.","A discovery loud enough to found a country.","renowned"],
+  ["bell","Alexander Graham Bell","🗣️",["voice","speed"],"science","Turned a human voice into electricity and back again.","dead","Before anything else, preparation is the key to success.","A voice, sent traveling at electric speed.","notable"],
+  ["wrightbros","The Wright Brothers","✈️",["machine","flight"],"science","Got a machine off the ground for twelve seconds and changed travel forever.","dead","It is possible to fly without motors, but not without knowledge and skill.","A machine that finally learned to fly.","renowned"],
+  ["sagan","Carl Sagan","🌌",["idea","adventure"],"science","Made billions of people fall in love with the universe from their living rooms.","dead","We are made of star-stuff.","An idea that turned stargazing into an adventure.","notable"],
+
+  ["davinci","Leonardo da Vinci","😏",["art","idea"],"art","Painted a smile so mysterious the internet still argues about it.","dead","Simplicity is the ultimate sophistication.","Art, powered by an unstoppable idea.","mythic"],
+  ["vangogh","Vincent van Gogh","🌻",["art","sunflower"],"art","Sold one painting in his lifetime. Sells out museums in this one.","dead","I dream my painting, then I paint my dream.","Art that grew straight out of a sunflower field.","legendary"],
+  ["picasso","Pablo Picasso","👁️",["art","human"],"art","Rearranged the human face so thoroughly you need two angles to say hello.","dead","Every child is an artist.","Art that reshaped what a human face could look like.","legendary"],
+  ["dali","Salvador Dalí","⏰",["art","ego"],"art","Melted every clock in sight and somehow made it fashionable.","dead","Have no fear of perfection — you'll never reach it.","Art with an ego large enough to bend time.","renowned"],
+  ["michelangelo","Michelangelo","🏛️",["art","sculpture"],"art","Painted an entire chapel ceiling lying on his back for four years.","dead","I saw the angel in the marble.","Art that learned to carve as well as paint.","legendary"],
+  ["warhol","Andy Warhol","🥫",["art","money"],"art","Turned a soup can into a punchline, then into a fortune.","dead","Everyone will be world-famous for 15 minutes.","Art that figured out how to sell itself.","renowned"],
+  ["rembrandt","Rembrandt","🕯️",["art","fear"],"art","Painted himself close to a hundred times, wrinkles and all.","dead","Choose only one master — Nature.","Art that wasn't afraid to paint the truth.","notable"],
+  ["monet","Claude Monet","🌸",["art","garden"],"art","Painted the same pond, over and over, until light itself became the subject.","dead","I must have flowers, always, and always.","Art that lived and grew in a garden.","renowned"],
+  ["frida","Frida Kahlo","🌺",["art","pain"],"art","Turned a lifetime of physical pain into some of the most fearless self-portraits ever painted.","dead","I paint my own reality.","Art made from pain, painted without flinching.","renowned"],
+  ["raphael","Raphael","👼",["art","faith"],"art","Painted saints and popes so gracefully the Renaissance never really recovered.","dead","Beauty is a thing most strange.","Art built on quiet, graceful faith.","notable"],
+  ["botticelli","Sandro Botticelli","🐚",["art","ocean"],"art","Painted a goddess arriving on a seashell and never really topped it.","dead","Anyone who steals from me deserves greater punishment than for any other theft.","Art rising straight out of the sea.","notable"],
+  ["okeeffe","Georgia O'Keeffe","💀",["art","dust"],"art","Painted the American desert until flowers and bones both looked monumental.","dead","I found I could say things with color that I couldn't say any other way.","Art that found grandeur in the driest places.","notable"],
+  ["banksy","Banksy","🎭",["art","mystery"],"art","Nobody knows who they are — and that mystery is basically the whole artwork.","living","Art should comfort the disturbed and disturb the comfortable.","Art wrapped entirely in a mystery.","renowned"],
+  ["haring","Keith Haring","👯",["art","rhythm"],"art","Turned subway walls into a dance party you could see.","dead","Art is for everybody.","Art that moved with its own rhythm.","notable"],
+  ["klimt","Gustav Klimt","🌀",["art","gold"],"art","Covered his paintings in literal gold leaf and made it look effortless.","dead","All art is erotic.","Art, gilded until it glowed.","notable"],
+  ["munch","Edvard Munch","😱",["art","grief"],"art","Painted a single silent scream that everyone somehow recognizes instantly.","dead","I hear the scream in nature.","Art built entirely out of grief.","notable"],
+
+  ["beethoven","Ludwig van Beethoven","🎼",["idea","voice"],"music","Wrote his most famous symphony after he'd stopped being able to hear it.","dead","Music is the mediator between spirit and sense.","A voice carrying an unstoppable idea.","legendary"],
+  ["mozart","Wolfgang Amadeus Mozart","🎹",["human","voice"],"music","Composing minuets at five, out-writing orchestras by eight.","dead","Melody is the essence of music.","A voice that started before he could write.","legendary"],
+  ["elvis","Elvis Presley","🕺",["voice","ego"],"music","One hip wiggle and America crowned him on the spot.","dead","Thank you, thank you very much.","A voice with just enough swagger to become the King.","legendary"],
+  ["michaeljackson","Michael Jackson","🧤",["voice","passion"],"music","Moonwalked backward and somehow moved pop music forward.","dead","I'm never pleased with anything — I'm a perfectionist.","A voice fueled entirely by passion.","legendary"],
+  ["beatles","The Beatles","🎸",["voice","voice"],"music","Four haircuts that made a whole generation scream in unison.","dead","A dream you dream together is reality.","Four voices, multiplied into one.","legendary"],
+  ["freddie","Freddie Mercury","🎙️",["voice","power"],"music","Could make eighty thousand strangers sing back in perfect key.","dead","I won't be a rock star. I will be a legend.","A voice with the power to command a stadium.","legendary"],
+  ["bach","Johann Sebastian Bach","🎼",["instrument","idea"],"music","Wrote so much music that scholars are still cataloguing all of it.","dead","The aim and final end of all music should be the glory of God.","An instrument, wired directly to a brilliant idea.","renowned"],
+  ["chopin","Frédéric Chopin","🎹",["instrument","grief"],"music","Wrote piano pieces so aching they're still played at funerals and weddings alike.","dead","Simplicity is the final achievement.","An instrument that learned to carry grief.","notable"],
+  ["tchaikovsky","Pyotr Tchaikovsky","🩰",["instrument","grace"],"music","Wrote The Nutcracker and basically invented the modern Christmas ballet.","dead","Inspiration is a guest that does not willingly visit the lazy.","An instrument set to pure grace.","notable"],
+  ["marley","Bob Marley","🌴",["instrument","freedom"],"music","Turned reggae into a global language for peace and resistance.","dead","One good thing about music, when it hits you, you feel no pain.","An instrument tuned entirely to freedom.","renowned"],
+  ["dylan","Bob Dylan","📝",["instrument","poem"],"music","Won a Nobel Prize in Literature for songs, not novels.","living","The times they are a-changin'.","An instrument that turned into poetry.","renowned"],
+  ["whitney","Whitney Houston","🎤",["voice","grace"],"music","Had a vocal range that made every karaoke night feel unfair.","dead","No matter what, no matter where, you will always find love there.","A voice performing with pure grace.","renowned"],
+  ["sinatra","Frank Sinatra","🎩",["voice","fame"],"music","Sang his way to becoming the definition of old-school cool.","dead","I did it my way.","A voice that became famous doing it his own way.","renowned"],
+  ["madonna","Madonna","👑",["voice","fashion"],"music","Reinvented her whole image so many times, reinvention became her image.","living","I'm tough, I'm ambitious, and I know exactly what I want.","A voice that kept changing its fashion.","renowned"],
+  ["bowie","David Bowie","👽",["voice","cartoon"],"music","Kept inventing new characters so he never had to be just one thing.","dead","I don't know where I'm going from here, but I promise it won't be boring.","A voice performing an ever-changing cartoon.","renowned"],
+  ["armstrong_louis","Louis Armstrong","🎺",["instrument","voice"],"music","Turned a trumpet and a gravelly voice into the sound of jazz itself.","dead","What we play is life.","An instrument and a voice, inseparable.","renowned"],
+  ["aretha","Aretha Franklin","👑",["voice","command"],"music","Demanded respect in a song and the whole world agreed.","dead","Respect is earned, not given.","A voice powerful enough to command respect.","renowned"],
+  ["hendrix","Jimi Hendrix","🎸",["instrument","fire"],"music","Set his own guitar on fire and somehow that wasn't even his best trick.","dead","I used to live in a room full of mirrors.","An instrument, literally set on fire.","renowned"],
+  ["taylorswift","Taylor Swift","📝",["story","fame"],"music","Turned her own diary into the biggest tour in the history of music.","living","Haters gonna hate.","A story so famous it filled stadiums.","legendary"],
+  ["bts","BTS","💜",["voice","network"],"music","Seven members, one fandom, and a global reach few groups ever match.","living","You can't stop us, you can't stop our dream.","A voice reaching the whole network of the world.","legendary"],
+
+  ["napoleon","Napoleon Bonaparte","🎖️",["crown","sword"],"leaders","Conquered most of Europe and still gets to be the short joke.","dead","Impossible is a word found only in fools' dictionaries.","A crown, won entirely at swordpoint.","mythic"],
+  ["cleopatra","Cleopatra","🐍",["crown","art"],"leaders","Ruled an empire and, legend says, arrived to meetings in a rolled-up rug.","dead","I will not be triumphed over.","A crown worn with pure artistry.","mythic"],
+  ["lincoln","Abraham Lincoln","🎩",["crown","dove"],"leaders","Wore the tallest hat in the room and still stood taller than the arguments around him.","dead","Government of the people, by the people, for the people.","A crown that fought to bring peace.","legendary"],
+  ["gandhi","Mahatma Gandhi","🕊️",["dove","glasses"],"leaders","Wore down an empire with nothing but a walking stick and stubborn patience.","dead","Be the change you wish to see in the world.","Peace, seen clearly through simple glasses.","mythic"],
+  ["churchill","Winston Churchill","🚬",["crown","idea"],"leaders","Answered the darkest hour of a war with a cigar and one very good speech.","dead","Success is never final; failure is never fatal.","A crown backed by a stubborn, brilliant idea.","legendary"],
+  ["mandela","Nelson Mandela","✊",["dove","chains"],"leaders","Walked out of 27 years in prison and chose forgiveness on the way out.","dead","It always seems impossible until it's done.","Peace, forged after breaking real chains.","legendary"],
+  ["sejong","King Sejong","📜",["crown","quill"],"leaders","Invented an entire alphabet just so his people could actually read it.","dead","I am distressed my people cannot express their thoughts in writing.","A crown that picked up a quill for its people.","renowned"],
+  ["yisunsin","Yi Sun-sin","⛵",["sword","ship"],"leaders","Won a naval battle against 133 ships with 13 — and still kept a diary.","dead","I still have twelve ships.","A sword that took command of the sea.","renowned"],
+  ["genghiskhan","Genghis Khan","🐎",["sword","moon"],"leaders","Built the largest land empire in history, one horseback raid at a time.","dead","Conquering on horseback is easy; ruling afterward is not.","A sword that rode as far as the moon looked close.","legendary"],
+  ["caesar","Julius Caesar","🌿",["crown","ship"],"leaders","Crossed a river with an army and casually rewrote the rules of Rome.","dead","I came, I saw, I conquered.","A crown that sailed straight into history.","legendary"],
+  ["mlk","Martin Luther King Jr.","📣",["dove","voice"],"leaders","Turned a dream into a speech the whole world still quotes.","dead","I have a dream.","Peace, spoken in the most famous voice of a generation.","mythic"],
+  ["washington","George Washington","🎩",["crown","freedom"],"leaders","Was offered a king's power and chose to walk away from it instead.","dead","It is better to offer no excuse than a bad one.","A crown he gave up for freedom.","legendary"],
+  ["elizabeth2","Queen Elizabeth II","👑",["crown","time"],"leaders","Sat on the same throne for 70 years and outlasted fifteen prime ministers.","dead","I have to be seen to be believed.","A crown worn longer than almost anyone in history.","renowned"],
+  ["alexander","Alexander the Great","🗡️",["sword","fame"],"leaders","Conquered most of the known world before turning 33.","dead","There is nothing impossible to him who will try.","A sword that made him famous before 30.","legendary"],
+  ["bolivar","Simón Bolívar","🗽",["sword","independence"],"leaders","Liberated six South American nations from colonial rule.","dead","A people that loves freedom will in the end be free.","A sword drawn purely for independence.","notable"],
+  ["fdr","Franklin D. Roosevelt","🦽",["crown","wisdom"],"leaders","Led a nation through a depression and a world war from a wheelchair.","dead","The only thing we have to fear is fear itself.","A crown steadied by quiet wisdom.","renowned"],
+  ["peterthegreat","Peter the Great","🚢",["crown","discovery"],"leaders","Traveled Europe in disguise just to learn shipbuilding, then modernized an empire.","dead","I am a student and I need teachers.","A crown built on curious discovery.","notable"],
+  ["catherinethegreat","Catherine the Great","👑",["empire","wisdom"],"leaders","Grew an empire and a library at the same time.","dead","I praise loudly. I blame softly.","An empire ruled with real wisdom.","notable"],
+  ["ashoka","Ashoka the Great","☸️",["crown","faith"],"leaders","Conquered a subcontinent, then renounced violence and spread peace instead.","dead","All men are my children.","A crown that traded war for faith.","notable"],
+  ["suleiman","Suleiman the Magnificent","🕌",["crown","law"],"leaders","Ruled the Ottoman Empire at its peak and rewrote its entire legal code.","dead","I am God's slave and sultan of this world.","A crown that ruled by its own law.","notable"],
+  ["saladin","Saladin","🗡️",["sword","mercy"],"leaders","Recaptured Jerusalem and was respected by his enemies for his mercy.","dead","We shall win our country back with the sword.","A sword remembered as much for mercy as for victory.","notable"],
+  ["joanofarc","Joan of Arc","⚔️",["sword","faith"],"leaders","Led an army at seventeen, guided only by voices she said were divine.","dead","I am not afraid — I was born to do this.","A sword raised entirely on faith.","renowned"],
+  ["rosaparks","Rosa Parks","🚌",["chains","brave"],"leaders","Stayed in her seat and helped move an entire nation.","dead","I would like to be remembered as a person who wanted to be free.","Bravery that finally broke the chains.","renowned"],
+  ["malala","Malala Yousafzai","📚",["voice","freedom"],"leaders","Survived being shot for wanting to go to school, then kept speaking anyway.","living","One child, one teacher, one book, one pen can change the world.","A voice for freedom that refused to be silenced.","renowned"],
+
+  ["socrates","Socrates","🤔",["idea","quill"],"thinkers","Claimed to know nothing and still out-argued everyone who did.","dead","The only true wisdom is knowing you know nothing.","An idea so sharp it needed no notes of its own.","legendary"],
+  ["confucius","Confucius","🖋️",["quill","human"],"thinkers","Wrote down how to be a decent person, 2,500 years before self-help books existed.","dead","It does not matter how slowly you go, as long as you do not stop.","A quill teaching an entire civilization how to be human.","legendary"],
+  ["freud","Sigmund Freud","🛋️",["idea","water"],"thinkers","Decided your dreams are secretly about your childhood. Might be onto something.","dead","Sometimes a cigar is just a cigar.","An idea fished straight out of your subconscious.","legendary"],
+  ["plato","Plato","🏺",["idea","cave"],"thinkers","Imagined a cave full of shadows and accidentally described the internet.","dead","Wise men speak because they have something to say; fools because they have to say something.","An idea that saw past the shadows on the wall.","legendary"],
+  ["aristotle","Aristotle","🦉",["idea","number"],"thinkers","Tutored Alexander the Great and basically invented the idea of studying everything.","dead","Knowing yourself is the beginning of all wisdom.","An idea organized enough to number every branch of knowledge.","legendary"],
+  ["kant","Immanuel Kant","🕰️",["idea","law"],"thinkers","Took the same walk at the same time every day — for decades.","dead","Act only according to that maxim whereby you can at the same time will that it should become a universal law.","An idea so precise it ran on a schedule.","notable"],
+  ["jung","Carl Jung","🌓",["idea","fear"],"thinkers","Split the mind into the conscious and the shadow self, and named both.","dead","Who looks outside, dreams; who looks inside, awakes.","An idea that went looking for the fear hiding inside all of us.","notable"],
+  ["laozi","Laozi","☯️",["wisdom","water"],"thinkers","Taught that the softest thing, water, can wear down the hardest stone.","dead","A journey of a thousand miles begins with a single step.","Wisdom, flowing exactly like water.","notable"],
+  ["buddha","Buddha","🪷",["wisdom","faith"],"thinkers","Gave up a palace to sit under a tree until he understood suffering itself.","dead","Peace comes from within. Do not seek it without.","Wisdom found only through deep, quiet faith.","legendary"],
+  ["marx","Karl Marx","📕",["idea","revolution"],"thinkers","Wrote a book that reorganized a good portion of the 20th century.","dead","Workers of the world, unite.","The idea that gave a revolution its plan.","renowned"],
+
+  ["shakespeare","William Shakespeare","🎭",["quill","art"],"writers","Invented hundreds of words because English didn't have enough insults yet.","dead","To be, or not to be, that is the question.","A quill that turned into pure art.","mythic"],
+  ["homer","Homer","🏺",["poem","adventure"],"writers","Wrote an adventure so good, we're still making movies out of it.","dead","Sing to me of the man, muse, the man of twists and turns.","A poem built entirely from one long adventure.","renowned"],
+  ["austen","Jane Austen","💌",["story","elegance"],"writers","Wrote sharp social comedy about marriage while never marrying herself.","dead","There is nothing I would not do for those who are really my friends.","A story told with impeccable elegance.","renowned"],
+  ["tolstoy","Leo Tolstoy","📚",["story","wisdom"],"writers","Wrote a novel so long it comes with its own cast list.","dead","Everyone thinks of changing the world, but no one thinks of changing himself.","A story weighed down with genuine wisdom.","renowned"],
+  ["twain","Mark Twain","🛶",["story","voice"],"writers","Gave American literature its first great voice, and its best one-liners.","dead","The two most important days in your life are the day you are born and the day you find out why.","A story told in an unmistakable voice.","renowned"],
+  ["hemingway","Ernest Hemingway","🎣",["story","brave"],"writers","Wrote in sentences so short, entire writing styles are named after him.","dead","The world breaks everyone, and afterward many are strong at the broken places.","A story cut down to its bravest, barest bones.","renowned"],
+  ["dickens","Charles Dickens","🕯️",["story","chains"],"writers","Got paid by the word and still wrote some of the best sentences in English.","dead","It was the best of times, it was the worst of times.","A story that broke real social chains.","renowned"],
+  ["kafka","Franz Kafka","🪲",["story","fear"],"writers","Wrote a man waking up as an insect, and somehow it still feels relatable.","dead","A book must be the axe for the frozen sea within us.","A story built entirely out of quiet fear.","notable"],
+  ["poe","Edgar Allan Poe","🐦‍⬛",["poem","fear"],"writers","Basically invented the detective story and the horror story in the same career.","dead","Deep into that darkness peering, long I stood there wondering, fearing.","A poem that made fear rhyme.","notable"],
+  ["christie","Agatha Christie","🔎",["mystery","story"],"writers","The best-selling novelist of all time, and still keeps you guessing.","dead","A murderer is always romantic.","A mystery wrapped inside a bestselling story.","renowned"],
+  ["rowling","J.K. Rowling","🪄",["fairytale","story"],"writers","Wrote an entire generation's favorite school on the back of napkins and rejection letters.","living","It is our choices that show what we truly are, far more than our abilities.","A fairy tale that became a whole shelf of stories.","legendary"],
+  ["andersen","Hans Christian Andersen","🧜",["fairytale","tears"],"writers","Wrote fairy tales sad enough to make grown adults cry.","dead","Life itself is the most wonderful fairy tale.","A fairy tale that never hid its tears.","notable"],
+
+  ["columbus","Christopher Columbus","🧭",["ship","earth"],"explorers","Set sail for India, landed somewhere else entirely, never updated the map.","dead","You can never cross the ocean until you lose sight of the shore.","A ship that redrew the map of the world.","legendary"],
+  ["armstrong","Neil Armstrong","👣",["moon","rocket"],"explorers","Took one small step and left the biggest footprint in human history.","dead","One small step for man, one giant leap for mankind.","A rocket that finally reached the moon.","legendary"],
+  ["marcopolo","Marco Polo","🐫",["adventure","ship"],"explorers","Traveled the Silk Road to China and came back with stories nobody believed.","dead","I did not tell half of what I saw.","An adventure that outran even a ship.","notable"],
+  ["magellan","Ferdinand Magellan","🌍",["ship","freedom"],"explorers","Set out to sail around the world. His crew finished the trip; he didn't survive it.","dead","The church says the earth is flat, but I know that it is round.","A ship chasing the freedom of open water.","notable"],
+  ["earhart","Amelia Earhart","🛩️",["flight","freedom"],"explorers","Flew solo across the Atlantic, then vanished trying to fly around the world.","dead","Adventure is worthwhile in itself.","Flight, chased all the way to total freedom.","renowned"],
+  ["gagarin","Yuri Gagarin","🚀",["rocket","fame"],"explorers","Became the first human in space and instantly the most famous man on Earth.","dead","I see Earth! It is so beautiful.","A rocket ride that made him instantly famous.","renowned"],
+  ["vascodagama","Vasco da Gama","⛵",["ship","gold"],"explorers","Found a sea route to India and opened up an entire spice trade.","dead","So great is the sweetness derived from this glory that men are moved to daring deeds.","A ship that sailed straight for gold.","notable"],
+  ["ibnbattuta","Ibn Battuta","🗺️",["adventure","faith"],"explorers","Traveled farther than Marco Polo, driven mostly by faith and curiosity.","dead","Travelling — it leaves you speechless, then turns you into a storyteller.","An adventure guided almost entirely by faith.","notable"],
+
+  ["ali","Muhammad Ali","🦋",["voice","war"],"sports","Floated like a butterfly, stung like a bee, talked louder than both.","dead","Float like a butterfly, sting like a bee.","A voice as sharp as any fighter's swing.","legendary"],
+  ["jordan","Michael Jordan","🏀",["power","ego"],"sports","Spent so long hanging in the air that physics filed a complaint.","living","I've failed over and over, and that's why I succeed.","Power, fueled by a fearless ego.","legendary"],
+  ["brucelee","Bruce Lee","🐉",["power","passion"],"sports","Threw a punch so fast the camera needed a second take to catch it.","dead","Be water, my friend.","Power moving with total passion.","legendary"],
+  ["pele","Pelé","⚽",["passion","ego"],"sports","Called football \"the beautiful game,\" then spent a career proving it.","dead","Everything is practice.","Passion and ego, perfectly balanced on a ball.","legendary"],
+  ["bolt","Usain Bolt","💨",["speed","fame"],"sports","Ran so fast he had time to celebrate before crossing the finish line.","living","I don't think limits.","Speed that made him instantly famous.","renowned"],
+  ["serena","Serena Williams","🎾",["power","record"],"sports","Rewrote the record books of tennis one Grand Slam at a time.","living","I really think a champion is defined not by their wins but by how they can recover.","Power that kept breaking the record.","renowned"],
+  ["ronaldo","Cristiano Ronaldo","⚽",["ego","fame"],"sports","Trained his body into a machine and his ego into a brand.","living","Talent without working hard is nothing.","An ego famous enough to fill stadiums.","renowned"],
+  ["messi","Lionel Messi","⚽",["passion","grace"],"sports","Plays football like it's easy, which is exactly why it isn't.","living","You have to fight to reach your dream.","Passion moving with pure grace.","renowned"],
+  ["phelps","Michael Phelps","🏊",["speed","record"],"sports","Won more Olympic medals than most entire countries.","living","If you want to be the best, you have to do things that other people aren't willing to do.","Speed that kept setting new records.","renowned"],
+  ["baberuth","Babe Ruth","⚾",["power","fame"],"sports","Pointed at the stands, then hit the ball exactly where he pointed.","dead","Every strike brings me closer to the next home run.","Power that turned into instant fame.","notable"],
+  ["tigerwoods","Tiger Woods","⛳",["power","machine"],"sports","Rewrote what was possible in golf before he was even 25.","living","I never quit trying. I never felt that I didn't have a chance to win.","Power trained until it moved like a machine.","notable"],
+  ["gretzky","Wayne Gretzky","🏒",["idea","speed"],"sports","Said he skated to where the puck was going, not where it had been.","living","You miss 100 percent of the shots you don't take.","An idea about speed no one else had thought of.","notable"],
+  ["federer","Roger Federer","🎾",["grace","record"],"sports","Made the most physically demanding sport look effortless for two decades.","living","I've always believed, if you have the belief, you can do almost anything.","Grace that kept setting the record.","notable"],
+  ["biles","Simone Biles","🤸",["grace","power"],"sports","Landed moves so hard, four of them are literally named after her.","living","I'd rather regret the risks that didn't work out than the ones I didn't take.","Grace built on raw power.","renowned"],
+  ["jesseowens","Jesse Owens","🏅",["speed","freedom"],"sports","Won four gold medals in Berlin in 1936, in front of the world.","dead","We all have dreams. But in order to make dreams come into reality, it takes an awful lot of determination.","Speed that became a statement of freedom.","notable"],
+  ["maradona","Diego Maradona","⚽",["ego","rebellion"],"sports","Scored the most controversial and the most brilliant goal in the same game.","dead","Football doesn't stop for anybody.","An ego that never played by the rules.","renowned"],
+  ["tyson","Mike Tyson","🥊",["power","fear"],"sports","Became the youngest heavyweight champion by making opponents afraid before the bell.","living","Everyone has a plan until they get punched in the mouth.","Power built on the fear it inspired.","notable"],
+
+  ["jobs","Steve Jobs","🍏",["apple","human"],"icons","Wore the same black turtleneck for twenty years and changed your pocket forever.","dead","Stay hungry, stay foolish.","An apple, held by a human who saw further.","legendary"],
+  ["musk","Elon Musk","🚀",["rocket","idea"],"icons","Sends rockets to orbit and memes to the timeline, often before breakfast.","living","When something is important enough, you do it despite the odds.","A rocket built from a very big idea.","renowned"],
+  ["chaplin","Charlie Chaplin","🕴️",["tears","idea"],"icons","Never said a word on screen and still made the whole world laugh and cry.","dead","A day without laughter is a day wasted.","An idea that could move you to tears without speaking.","legendary"],
+  ["monroe","Marilyn Monroe","💋",["star","passion"],"icons","One gust of wind over a subway grate and the image never left pop culture.","dead","Imperfection is beauty, madness is genius.","A star built entirely from passion.","legendary"],
+  ["disney","Walt Disney","🏰",["cartoon","empire"],"icons","Turned a cartoon mouse into a global empire of magic kingdoms.","dead","All our dreams can come true, if we have the courage to pursue them.","A cartoon that grew into an entire empire.","legendary"],
+  ["chanel","Coco Chanel","👗",["fashion","freedom"],"icons","Freed women from corsets and put them in trousers instead.","dead","Fashion fades, only style remains the same.","Fashion designed for real freedom.","renowned"],
+  ["oprah","Oprah Winfrey","📺",["voice","empire"],"icons","Built a media empire out of nothing but a talk show and her own voice.","living","You become what you believe.","A voice that built its own empire.","renowned"],
+  ["gates","Bill Gates","🖥️",["code","brand"],"icons","Wrote software in a garage and ended up running the world's desktops.","living","Success is a lousy teacher. It seduces smart people into thinking they can't lose.","Code that became a global brand.","renowned"],
+  ["zuckerberg","Mark Zuckerberg","📱",["network","brand"],"icons","Built a dorm-room website that connected roughly a third of the planet.","living","The biggest risk is not taking any risk.","A network that became its own brand.","renowned"],
+  ["bezos","Jeff Bezos","📦",["brand","rocket"],"icons","Started by selling books online and ended up owning the whole warehouse.","living","Your brand is what other people say about you when you're not in the room.","A brand ambitious enough to launch a rocket.","renowned"],
+  ["henryford","Henry Ford","🚗",["machine","speed"],"icons","Didn't invent the car, but he invented the assembly line that made everyone able to afford one.","dead","Whether you think you can, or you think you can't — you're right.","A machine built for speed and scale.","notable"],
+  ["hepburn","Audrey Hepburn","🎀",["elegance","grace"],"icons","Made a black dress and a coffee cup an entire aesthetic, permanently.","dead","Nothing is impossible, the word itself says 'I'm possible'!","Elegance moving with total grace.","renowned"],
+  ["jamesdean","James Dean","🏍️",["rebellion","fame"],"icons","Made three movies, died at 24, and became the definition of cool anyway.","dead","Dream as if you'll live forever, live as if you'll die today.","Rebellion that made him instantly famous.","notable"],
+  ["dianaprincess","Princess Diana","🌹",["crown","grief"],"icons","Used a royal title to hug AIDS patients when much of the world was too afraid to.","dead","Carry out a random act of kindness, with no expectation of reward.","A crown carried through real grief.","renowned"],
+  ["dicaprio","Leonardo DiCaprio","🌊",["fame","ocean"],"icons","Waited eleven Oscar nominations before finally winning, and the whole internet celebrated.","living","Climate change is real, it is happening right now.","Fame as vast as the ocean he championed.","renowned"],
+  ["keanu","Keanu Reeves","🕶️",["kindness","fame"],"icons","So famously kind offscreen that the internet decided he's simply too good for this world.","living","The simple things are also the most extraordinary things, and only the wise can see them.","Fame that never lost its kindness.","notable"],
+  ["spielberg","Steven Spielberg","🎬",["camera","story"],"icons","Directed the movies an entire generation grew up rewatching.","living","All of us every single year, we're a different person. I don't think we're the same person all our lives.","A camera that never stopped telling stories.","renowned"],
+  ["hitchcock","Alfred Hitchcock","🔪",["camera","fear"],"icons","Made a shower scene so tense, people still hesitate before showering alone.","dead","There is no terror in the bang, only in the anticipation of it.","A camera trained entirely on fear.","notable"],
+  ["gracekelly","Grace Kelly","👸",["elegance","crown"],"icons","Went from Hollywood's leading lady to an actual princess.","dead","I've always been shy, and it hasn't changed a bit.","Elegance that earned an actual crown.","notable"],
+  ["jackiechan","Jackie Chan","🥋",["comedy","power"],"icons","Does his own stunts and somehow makes broken bones look like slapstick comedy.","living","I am not scared of dying, I've done it several times in my movies.","Power delivered with perfect comic timing.","notable"]
+];
+
+const ELEMENTS = RAW.map(row=>{
+  const [id,name,emoji,r,cat,flavor,era,quote,why,tier] = row;
+  return {id,name,emoji,r,cat,flavor,era:era||null,person:!!era,quote:quote||null,why:why||null,tier:tier||null};
+});
+const BY_ID = new Map(ELEMENTS.map(e=>[e.id,e]));
+const CAT_BY_ID = new Map(CATS.map(c=>[c.id,c]));
+
+const RECIPES = new Map();
+const dupWarnings = [];
+ELEMENTS.forEach(e=>{
+  if(!e.r) return;
+  const key = [e.r[0],e.r[1]].sort().join("|");
+  if(RECIPES.has(key) && RECIPES.get(key)!==e.id) dupWarnings.push(`Dup ${key}: ${RECIPES.get(key)} vs ${e.id}`);
+  RECIPES.set(key,e.id);
+});
+if(dupWarnings.length) console.warn("Icon's Recipe collisions ("+dupWarnings.length+"):\n"+dupWarnings.join("\n"));
+
+const BASE_IDS = ["fire","water","earth","air"];
+(function reachability(){
+  const reached = new Set(BASE_IDS);
+  let changed = true;
+  while(changed){
+    changed = false;
+    ELEMENTS.forEach(e=>{
+      if(reached.has(e.id) || !e.r) return;
+      if(reached.has(e.r[0]) && reached.has(e.r[1])){ reached.add(e.id); changed = true; }
+    });
+  }
+  const unreached = ELEMENTS.filter(e=>!reached.has(e.id)).map(e=>e.id);
+  if(unreached.length) console.warn("Icon's Recipe unreachable ("+unreached.length+"):", unreached);
+  else console.log("Icon's Recipe: all "+ELEMENTS.length+" elements reachable, 0 collisions.");
+})();
+
+function tierOf(e){ return e.person ? (e.tier || "notable") : null; }
+function personMarkHTML(tier){ return tier ? `<span class="person-mark tier-${tier}">${TIER_ORNAMENT[tier]}</span>` : ""; }
+const TIER_COLOR = {notable:"var(--tier-notable)", renowned:"var(--tier-renowned)", legendary:"var(--tier-legendary)", mythic:"var(--tier-mythic)"};
+const TIER_ORNAMENT = {
+  notable: '<svg viewBox="0 0 16 16" width="8" height="8"><path d="M8 1 L14 8 L8 15 L2 8 Z" fill="currentColor"/></svg>',
+  renowned: '<svg viewBox="0 0 16 16" width="10" height="10"><path d="M8 0 L9.5 6.5 L16 8 L9.5 9.5 L8 16 L6.5 9.5 L0 8 L6.5 6.5 Z" fill="currentColor"/></svg>',
+  legendary: '<svg viewBox="0 0 16 16" width="12" height="12"><path d="M8 0 L9.79 5.53 L15.9 5.51 L11 8.95 L12.9 14.51 L8 11 L3.1 14.51 L5 8.95 L0.1 5.51 L6.21 5.53 Z" fill="currentColor"/></svg>',
+  mythic: '<svg viewBox="0 0 16 16" width="14" height="14"><path d="M2 6 L5 9 L8 3 L11 9 L14 6 L14 13 L2 13 Z" fill="currentColor"/><circle cx="2" cy="6" r="1.3" fill="currentColor"/><circle cx="8" cy="3" r="1.3" fill="currentColor"/><circle cx="14" cy="6" r="1.3" fill="currentColor"/></svg>'
+};
+const TIER_ORDER = ["mythic","legendary","renowned","notable"];
+function ringColor(e){ const t = tierOf(e); return t ? TIER_COLOR[t] : CAT_BY_ID.get(e.cat).color; }
+
+const PERSONS = ELEMENTS.filter(e=>e.person);
+const TOTAL = ELEMENTS.length;
+document.getElementById("personTotal").textContent = PERSONS.length;
+
+const LS_KEY = "iconsrecipe.discovered.v1";
+let discovered = new Set(BASE_IDS);
+try{
+  const saved = JSON.parse(localStorage.getItem(LS_KEY) || "null");
+  if(Array.isArray(saved) && saved.length) discovered = new Set(saved.filter(id=>BY_ID.has(id)));
+}catch(e){}
+function persist(){ try{ localStorage.setItem(LS_KEY, JSON.stringify([...discovered])); }catch(e){} }
+
+let activeCat = "all";
+let searchTerm = "";
+let lastDiscoverAt = 0;
+let streak = 0;
+
+const ledgerTabsEl = document.getElementById("ledgerTabs");
+const ledgerScrollEl = document.getElementById("ledgerScroll");
+const ledgerMetaText = document.getElementById("ledgerMetaText");
+const surfaceEl = document.getElementById("surface");
+const wbEmptyEl = document.getElementById("wbEmpty");
+const personCountEl = document.getElementById("personCount");
+const toastLayer = document.getElementById("toastLayer");
+const ledgerEl = document.getElementById("ledger");
+const ledgerToggle = document.getElementById("ledgerToggle");
+
+/* =========================================================
+   LEDGER RENDERING
+========================================================= */
+function buildTabs(){
+  const tabs = [{id:"all",label:"All",color:"var(--gold)"}, ...CATS];
+  ledgerTabsEl.innerHTML = "";
+  tabs.forEach(t=>{
+    const b = document.createElement("button");
+    b.className = "tab";
+    b.textContent = t.label;
+    b.style.setProperty("--tab-color", t.color);
+    b.dataset.active = String(t.id===activeCat);
+    b.addEventListener("click", ()=>{ activeCat = t.id; renderLedger(); buildTabs(); });
+    ledgerTabsEl.appendChild(b);
+  });
+}
+ledgerTabsEl.addEventListener("wheel", (e)=>{
+  if(ledgerTabsEl.scrollWidth > ledgerTabsEl.clientWidth){
+    e.preventDefault();
+    ledgerTabsEl.scrollLeft += (e.deltaY || e.deltaX);
+  }
+}, {passive:false});
+
+function renderLedger(){
+  const q = searchTerm.trim().toLowerCase();
+  const groups = activeCat==="all" ? CATS : CATS.filter(c=>c.id===activeCat);
+  ledgerScrollEl.innerHTML = "";
+  let any = false;
+
+  groups.forEach(cat=>{
+    let items = ELEMENTS.filter(e=>e.cat===cat.id);
+    if(q) items = items.filter(e=> discovered.has(e.id) && e.name.toLowerCase().includes(q) );
+    if(!items.length) return;
+    any = true;
+    const g = document.createElement("div");
+    g.className = "ledger-group";
+    const h = document.createElement("h3");
+    h.style.setProperty("--grp-color", cat.color);
+    h.innerHTML = `<span class="dot"></span>${cat.label} <span class="mono" style="font-weight:400;color:var(--text-faint)">(${items.filter(i=>discovered.has(i.id)).length}/${items.length})</span>`;
+    g.appendChild(h);
+    const grid = document.createElement("div");
+    grid.className = "ledger-grid";
+    items.forEach(e=> grid.appendChild(makeMedallion(e)) );
+    g.appendChild(grid);
+    ledgerScrollEl.appendChild(g);
+  });
+
+  if(!any){
+    const p = document.createElement("div");
+    p.className = "empty-note";
+    p.textContent = q ? "No discovered icons match your search." : "Nothing here yet — go combine something.";
+    ledgerScrollEl.appendChild(p);
+  }
+
+  ledgerMetaText.textContent = `${discovered.size}/${TOTAL} discovered`;
+  personCountEl.textContent = PERSONS.filter(p=>discovered.has(p.id)).length;
+}
+
+function makeMedallion(e){
+  const isKnown = discovered.has(e.id);
+  const tier = tierOf(e);
+  const el = document.createElement("button");
+  el.className = "medallion " + (isKnown ? "discovered" : "locked") + (e.person?" person-slot":"") + (tier?" tier-"+tier:"");
+  el.dataset.id = e.id;
+  const cat = CAT_BY_ID.get(e.cat);
+  const lockedGlyph = e.person ? "👤" : "?";
+  el.innerHTML = `
+    <span class="coin" style="--coin-color:${isKnown ? ringColor(e) : cat.color}">${isKnown ? e.emoji : lockedGlyph}${isKnown ? personMarkHTML(tier) : ""}</span>
+    <span class="lbl">${isKnown ? e.name : "???"}</span>
+  `;
+  if(isKnown){
+    el.addEventListener("pointerdown", (ev)=> startSidebarDrag(ev, e.id));
+    attachComboMenu(el, e.id);
+    el.title = e.name + (tier ? ` · ${TIERS[tier].label} · ${cat.label}` : "");
+  }else{
+    el.addEventListener("click", ()=> toast({locked:true, text:"Not discovered yet — try combining related elements."}) );
+  }
+  return el;
+}
+
+/* =========================================================
+   TOASTS (regular elements)
+========================================================= */
+function toast({id, locked, text}){
+  const div = document.createElement("div");
+  div.className = "toast";
+  if(locked){
+    div.innerHTML = `<span class="coin" style="--coin-color:var(--text-faint)">?</span>
+      <div><div class="tt-title">Codex</div><div class="tt-name" style="font-weight:500;font-size:12px;color:var(--text-dim)">${text}</div></div>`;
+  }else{
+    const e = BY_ID.get(id);
+    const cat = CAT_BY_ID.get(e.cat);
+    const showStreak = streak>=2 ? `<span class="streak">🔥 ${streak} in a row</span>` : "";
+    div.innerHTML = `<span class="coin" style="--coin-color:${cat.color}">${e.emoji}</span>
+      <div><div class="tt-title">New Discovery ${showStreak}</div><div class="tt-name">${e.name}</div></div>`;
+  }
+  toastLayer.appendChild(div);
+  setTimeout(()=>{ div.classList.add("leaving"); setTimeout(()=>div.remove(), 320); }, 2600);
+}
+
+/* =========================================================
+   REVEAL MODAL (person discovery)
+========================================================= */
+function sparkleHTML(tier){
+  const count = tier==="mythic" ? 8 : 6;
+  const glyphs = ["✦","✧","✦","✧","✦","✧","✦","✧"];
+  const radius = tier==="mythic" ? 66 : 58;
+  let out = "";
+  for(let i=0;i<count;i++){
+    const rad = ((360/count)*i) * Math.PI/180;
+    const cx = 50 + Math.cos(rad)*radius;
+    const cy = 50 + Math.sin(rad)*radius;
+    const delay = (i*0.22).toFixed(2);
+    out += `<span class="sparkle" style="left:${cx}px; top:${cy}px; animation-delay:${delay}s; font-size:${tier==='mythic'?13:11}px;">${glyphs[i]}</span>`;
+  }
+  return out;
+}
+
+function showReveal(id){
+  const e = BY_ID.get(id);
+  const cat = CAT_BY_ID.get(e.cat);
+  const tier = tierOf(e);
+  const backdrop = document.createElement("div");
+  backdrop.className = "overlay-backdrop tier-"+tier;
+  const bannerText = tier==="mythic" ? "★ Mythic Icon Forged ★" : tier==="legendary" ? "★ Legendary Icon Forged ★" : tier==="renowned" ? "Renowned Icon Forged" : "New Icon Forged";
+  const showSparkles = tier==="legendary" || tier==="mythic";
+  backdrop.innerHTML = `
+    <div class="reveal-card tier-${tier}" style="--coin-color:${TIER_COLOR[tier]}">
+      <div class="rc-clip"><div class="burst"></div></div>
+      <div class="rc-banner tier-${tier}">${bannerText}</div>
+      <div class="rc-inner">
+        <div class="reveal-coin-wrap">
+          ${showSparkles ? sparkleHTML(tier) : ""}
+          <div class="reveal-coin">${e.emoji}</div>
+        </div>
+        <h3>${e.name}</h3>
+        <div class="reveal-badges">
+          <span class="badge tier-${tier}"><b>${TIERS[tier].label}</b></span>
+          <span class="badge cat" style="--cat-color:${cat.color}">${cat.label}</span>
+          ${e.era==='living' ? '<span class="badge era-living">Living</span>' : '<span class="badge">Historical</span>'}
+        </div>
+        <p class="reveal-quote">${e.quote}</p>
+        <p class="reveal-blurb">${e.flavor}</p>
+        <button class="reveal-close">Continue</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(backdrop);
+  function close(){ backdrop.remove(); document.removeEventListener("keydown", onKey); }
+  function onKey(ev){ if(ev.key==="Escape") close(); }
+  backdrop.addEventListener("click", (ev)=>{ if(ev.target===backdrop) close(); });
+  backdrop.querySelector(".reveal-close").addEventListener("click", close);
+  document.addEventListener("keydown", onKey);
+}
+
+/* =========================================================
+   HALL OF FAME
+========================================================= */
+function openHallOfFame(){
+  const backdrop = document.createElement("div");
+  backdrop.className = "hof-backdrop";
+  const found = PERSONS.filter(p=>discovered.has(p.id)).length;
+  const cards = TIER_ORDER.map(tier=>{
+    const group = PERSONS.filter(p=>tierOf(p)===tier).sort((a,b)=>a.name.localeCompare(b.name));
+    const foundInGroup = group.filter(p=>discovered.has(p.id)).length;
+    const orn = TIER_ORNAMENT[tier];
+    const groupCards = group.map(p=>{
+      const known = discovered.has(p.id);
+      const cat = CAT_BY_ID.get(p.cat);
+      if(!known){
+        return `<div class="hof-card locked tier-${tier}">
+          <span class="hc-badge tier-${tier}">${TIERS[tier].label}</span>
+          <span class="coin" style="--coin-color:var(--text-faint)">👤</span>
+          <div class="hc-name">???</div>
+        </div>`;
+      }
+      return `<div class="hof-card tier-${tier}" style="--coin-color:${TIER_COLOR[tier]}">
+        <span class="hc-badge tier-${tier}">${TIERS[tier].label}</span>
+        <span class="coin" style="--coin-color:${TIER_COLOR[tier]}">${p.emoji}</span>
+        <div class="hc-name"><span class="hc-orn" style="color:${TIER_COLOR[tier]}">${orn}</span>${p.name}<span class="hc-orn" style="color:${TIER_COLOR[tier]}">${orn}</span></div>
+        <div class="hc-cat" style="color:${cat.color}">${cat.label}</div>
+        <div class="hc-quote">"${p.quote}"</div>
+      </div>`;
+    }).join("");
+    return `<div class="hof-section">
+      <h3 class="hof-section-head tier-${tier}"><span class="hc-orn" style="color:${TIER_COLOR[tier]}">${orn}</span>${TIERS[tier].label}<span class="mono hof-section-count">${foundInGroup}/${group.length}</span></h3>
+      <div class="hof-grid">${groupCards}</div>
+    </div>`;
+  }).join("");
+  backdrop.innerHTML = `
+    <div class="hof-panel">
+      <div class="hof-head">
+        <div>
+          <h2>Hall of Fame</h2>
+          <p>${found} of ${PERSONS.length} icons forged</p>
+        </div>
+        <button class="hof-close" id="hofClose">&times;</button>
+      </div>
+      <div class="hof-tierlegend">
+        <span><i style="background:var(--tier-mythic)"></i>Mythic — universally known, world-historic</span>
+        <span><i style="background:var(--tier-legendary)"></i>Legendary — famous almost everywhere</span>
+        <span><i style="background:var(--tier-renowned)"></i>Renowned — major global recognition</span>
+        <span><i style="background:var(--tier-notable)"></i>Notable — accomplished and well known</span>
+      </div>
+      ${cards}
+    </div>
+  `;
+  document.body.appendChild(backdrop);
+  function close(){ backdrop.remove(); document.removeEventListener("keydown", onKey); }
+  function onKey(ev){ if(ev.key==="Escape") close(); }
+  backdrop.addEventListener("click",(ev)=>{ if(ev.target===backdrop) close(); });
+  backdrop.querySelector("#hofClose").addEventListener("click", close);
+  document.addEventListener("keydown", onKey);
+}
+document.getElementById("hofBtn").addEventListener("click", openHallOfFame);
+
+/* =========================================================
+   COMBO POPOVER (right-click / long-press) — recipe + rationale + share
+========================================================= */
+let openPopover = null;
+function closePopover(){ if(openPopover){ openPopover.remove(); openPopover=null; document.removeEventListener("click", onDocClick, true); } }
+function onDocClick(ev){ if(openPopover && !openPopover.contains(ev.target)) closePopover(); }
+
+function showComboPopover(elemId, x, y){
+  closePopover();
+  const e = BY_ID.get(elemId);
+  const cat = CAT_BY_ID.get(e.cat);
+  const pop = document.createElement("div");
+  pop.className = "combo-pop";
+
+  const tier = tierOf(e);
+  let eqHtml, shareText;
+  if(!e.r){
+    eqHtml = `<span class="coin" style="--coin-color:${ringColor(e)}">${e.emoji}</span>`;
+    shareText = `${e.emoji} ${e.name} — one of the four founding elements on Icon's Recipe.`;
+  }else{
+    const a = BY_ID.get(e.r[0]), b = BY_ID.get(e.r[1]);
+    eqHtml = `<span class="coin" style="--coin-color:${ringColor(a)}">${a.emoji}</span>
+      <span class="cp-plus">+</span>
+      <span class="coin" style="--coin-color:${ringColor(b)}">${b.emoji}</span>
+      <span class="cp-eq-sign">=</span>
+      <span class="coin" style="--coin-color:${ringColor(e)}">${e.emoji}</span>`;
+    shareText = `${a.name} + ${b.name} = ${e.name} — on Icon's Recipe`;
+  }
+  const rationale = e.why || e.flavor || "";
+  pop.innerHTML = `
+    <div class="cp-eq">${eqHtml}</div>
+    <h4>${e.name}</h4>
+    ${tier ? `<div class="cp-tier" style="color:${TIER_COLOR[tier]}">${TIERS[tier].label} · ${cat.label}</div>` : ""}
+    <p>${rationale}</p>
+    <div class="cp-actions">
+      <button class="cp-share">Share combo</button>
+      <button class="cp-close">Close</button>
+    </div>
+  `;
+  document.body.appendChild(pop);
+  const pw = pop.offsetWidth, ph = pop.offsetHeight;
+  const vx = Math.min(Math.max(x - pw/2, 10), window.innerWidth - pw - 10);
+  const vy = Math.min(Math.max(y - ph - 14, 10), window.innerHeight - ph - 10);
+  pop.style.left = vx+"px";
+  pop.style.top = vy+"px";
+  pop.querySelector(".cp-close").addEventListener("click", closePopover);
+  pop.querySelector(".cp-share").addEventListener("click", async ()=>{
+    try{ await navigator.clipboard.writeText(shareText); toast({locked:true, text:"Combo copied to clipboard!"}); }
+    catch(err){ toast({locked:true, text:shareText}); }
+    closePopover();
+  });
+  openPopover = pop;
+  setTimeout(()=> document.addEventListener("click", onDocClick, true), 10);
+}
+
+function attachComboMenu(el, elemId){
+  el.addEventListener("contextmenu", (ev)=>{
+    ev.preventDefault();
+    if(discovered.has(elemId)) showComboPopover(elemId, ev.clientX, ev.clientY);
+  });
+  let pressTimer=null, pressStart=null;
+  el.addEventListener("pointerdown", (ev)=>{
+    pressStart = {x:ev.clientX, y:ev.clientY};
+    pressTimer = setTimeout(()=>{
+      pressTimer=null;
+      if(discovered.has(elemId)) showComboPopover(elemId, ev.clientX, ev.clientY);
+    }, 550);
+  });
+  const cancelPress = ()=>{ if(pressTimer){ clearTimeout(pressTimer); pressTimer=null; } };
+  el.addEventListener("pointerup", cancelPress);
+  el.addEventListener("pointerleave", cancelPress);
+  el.addEventListener("pointermove", (ev)=>{
+    if(pressStart && Math.hypot(ev.clientX-pressStart.x, ev.clientY-pressStart.y) > 10) cancelPress();
+  });
+}
+
+/* =========================================================
+   WORKBENCH TOKENS + DRAG ENGINE v2
+   - transform:translate3d for GPU-smooth movement (fixes lag)
+   - requestAnimationFrame batching
+   - elementFromPoint hit-testing for combine target (fixes "wrong icon" bug)
+   - drag reparents to <body> as position:fixed so it visually travels
+     anywhere on screen, incl. over the ledger (fixes delete-drag bug)
+========================================================= */
+let tokenSeq = 0;
+let zCounter = 1;
+const tokens = new Map();
+const clamp = (v,min,max)=> Math.min(Math.max(v,min),max);
+
+function updateEmptyState(){ wbEmptyEl.style.display = tokens.size ? "none" : "flex"; }
+
+function setTokenXY(el,x,y){ el.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%,-50%)`; }
+
+function placeToken(elemId, x, y){
+  const key = "tk"+(tokenSeq++);
+  const e = BY_ID.get(elemId);
+  const cat = CAT_BY_ID.get(e.cat);
+  const tier = tierOf(e);
+  const el = document.createElement("div");
+  el.className = "token" + (e.person ? " person" : "") + (tier ? " tier-"+tier : "");
+  el.dataset.key = key;
+  el.style.setProperty("--coin-color", ringColor(e));
+  el.style.zIndex = String(++zCounter);
+  setTokenXY(el, x, y);
+  el.innerHTML = `<span class="coin">${e.emoji}${personMarkHTML(tier)}</span><span class="lbl">${e.name}</span>`;
+  el.addEventListener("pointerdown",(ev)=> startTokenDrag(ev,key));
+  el.addEventListener("dblclick",(ev)=>{
+    ev.preventDefault();
+    ev.stopPropagation();
+    const t = tokens.get(key);
+    if(!t) return;
+    placeToken(elemId, t.x, t.y);
+  });
+  attachComboMenu(el, elemId);
+  surfaceEl.appendChild(el);
+  tokens.set(key,{id:elemId,x,y,el});
+  updateEmptyState();
+  return key;
+}
+
+function removeToken(key){
+  const t = tokens.get(key);
+  if(!t) return;
+  t.el.remove();
+  tokens.delete(key);
+  updateEmptyState();
+}
+
+function isPointOverLedger(clientX, clientY){
+  const r = ledgerEl.getBoundingClientRect();
+  return clientX>=r.left && clientX<=r.right && clientY>=r.top && clientY<=r.bottom;
+}
+
+function findTokenKeyAt(clientX, clientY, excludeEl){
+  if(excludeEl) excludeEl.style.pointerEvents = "none";
+  const hit = document.elementFromPoint(clientX, clientY);
+  if(excludeEl) excludeEl.style.pointerEvents = "";
+  const tokEl = hit && hit.closest && hit.closest(".token");
+  if(!tokEl) return null;
+  const key = tokEl.dataset.key;
+  return (key && tokens.has(key)) ? key : null;
+}
+
+/* ---- drag from sidebar: spawns a new token ---- */
+function startSidebarDrag(ev, elemId){
+  const startX = ev.clientX, startY = ev.clientY;
+  let phase = "pending"; // pending -> dragging | scrolling
+  let ghost = null;
+
+  function makeGhost(){
+    const e = BY_ID.get(elemId);
+    const cat = CAT_BY_ID.get(e.cat);
+    ghost = document.createElement("div");
+    ghost.className = "drag-ghost";
+    ghost.style.setProperty("--coin-color", cat.color);
+    ghost.innerHTML = `<span class="coin">${e.emoji}</span><span class="lbl">${e.name}</span>`;
+    document.body.appendChild(ghost);
+    moveGhost(startX,startY);
+  }
+  function moveGhost(x,y){ if(ghost){ ghost.style.left=x+"px"; ghost.style.top=y+"px"; } }
+
+  function onMove(mv){
+    const dx = mv.clientX-startX, dy = mv.clientY-startY;
+    if(phase==="pending"){
+      if(Math.hypot(dx,dy) > 10){
+        if(Math.abs(dx) > Math.abs(dy)*1.15){ phase="dragging"; makeGhost(); }
+        else phase="scrolling";
+      }
+    }
+    if(phase==="dragging"){ mv.preventDefault(); moveGhost(mv.clientX, mv.clientY); }
+  }
+  function onUp(up){
+    window.removeEventListener("pointermove", onMove);
+    window.removeEventListener("pointerup", onUp);
+    if(ghost) ghost.remove();
+
+    if(phase==="scrolling") return;
+
+    const rect = surfaceEl.getBoundingClientRect();
+    if(phase==="pending"){
+      const cx = rect.width/2 + (Math.random()*80-40);
+      const cy = rect.height/2 + (Math.random()*80-40);
+      dropNewToken(elemId, cx, cy);
+      return;
+    }
+    const inSurface = up.clientX>=rect.left && up.clientX<=rect.right && up.clientY>=rect.top && up.clientY<=rect.bottom;
+    if(inSurface){
+      dropNewToken(elemId, up.clientX-rect.left, up.clientY-rect.top);
+    }
+  }
+  window.addEventListener("pointermove", onMove, {passive:false});
+  window.addEventListener("pointerup", onUp);
+}
+
+function dropNewToken(elemId, x, y){
+  const rect = surfaceEl.getBoundingClientRect();
+  const cx = clamp(x, 30, rect.width-30), cy = clamp(y, 30, rect.height-30);
+  const key = placeToken(elemId, cx, cy);
+  const t = tokens.get(key);
+  const targetKey = findTokenKeyAt(rect.left+cx, rect.top+cy, t.el);
+  if(targetKey) attemptCombine(key, targetKey);
+}
+
+/* ---- drag an existing token: move / combine / delete-on-ledger ---- */
+function startTokenDrag(ev, key){
+  ev.stopPropagation();
+  const t = tokens.get(key);
+  if(!t) return;
+
+  const startClientX = ev.clientX, startClientY = ev.clientY;
+  let phase = "pending"; // pending -> dragging. Stays "pending" (no DOM changes at all) for a plain click/dblclick.
+  let offsetX = 0, offsetY = 0;
+
+  function beginDrag(cx,cy){
+    const rect = t.el.getBoundingClientRect();
+    offsetX = cx - (rect.left + rect.width/2);
+    offsetY = cy - (rect.top + rect.height/2);
+    t.el.classList.add("lifted","fixed-drag");
+    document.body.appendChild(t.el);
+    t.el.style.zIndex = String(++zCounter);
+    setTokenXY(t.el, cx-offsetX, cy-offsetY);
+    phase = "dragging";
+  }
+
+  function onMove(mv){
+    if(phase==="pending"){
+      if(Math.hypot(mv.clientX-startClientX, mv.clientY-startClientY) < 5) return;
+      beginDrag(mv.clientX, mv.clientY);
+    }
+    setTokenXY(t.el, mv.clientX-offsetX, mv.clientY-offsetY);
+    const overLedger = isPointOverLedger(mv.clientX, mv.clientY);
+    t.el.classList.toggle("delete-target", overLedger);
+  }
+  function onUp(up){
+    window.removeEventListener("pointermove", onMove);
+    window.removeEventListener("pointerup", onUp);
+    if(phase==="pending") return; // plain click / dblclick: we never touched the DOM, let the browser handle it natively
+    t.el.classList.remove("lifted","delete-target");
+
+    if(isPointOverLedger(up.clientX, up.clientY)){
+      t.el.style.transition = "opacity .16s ease, transform .16s ease";
+      setTokenXY(t.el, up.clientX-offsetX, up.clientY-offsetY);
+      t.el.style.opacity = "0";
+      requestAnimationFrame(()=>{
+        t.el.style.transform += " scale(.5)";
+      });
+      setTimeout(()=>{ t.el.remove(); tokens.delete(key); updateEmptyState(); }, 170);
+      return;
+    }
+
+    const surfRect = surfaceEl.getBoundingClientRect();
+    const nx = clamp(up.clientX-offsetX-surfRect.left, 30, surfRect.width-30);
+    const ny = clamp(up.clientY-offsetY-surfRect.top, 30, surfRect.height-30);
+    t.el.classList.remove("fixed-drag");
+    surfaceEl.appendChild(t.el);
+    t.x = nx; t.y = ny;
+    setTokenXY(t.el, nx, ny);
+
+    const targetKey = findTokenKeyAt(up.clientX, up.clientY, t.el);
+    if(targetKey) attemptCombine(key, targetKey);
+  }
+  window.addEventListener("pointermove", onMove);
+  window.addEventListener("pointerup", onUp);
+}
+
+function attemptCombine(keyA, keyB){
+  const a = tokens.get(keyA), b = tokens.get(keyB);
+  if(!a || !b) return;
+  const recipeKey = [a.id,b.id].sort().join("|");
+  const resultId = RECIPES.get(recipeKey);
+
+  if(!resultId){
+    [a.el,b.el].forEach(el=>{ el.classList.add("miss"); setTimeout(()=>el.classList.remove("miss"), 350); });
+    return;
+  }
+
+  const midX = (a.x+b.x)/2, midY = (a.y+b.y)/2;
+  removeToken(keyA);
+  removeToken(keyB);
+  const isNew = !discovered.has(resultId);
+  const newKey = placeToken(resultId, midX, midY);
+  const t = tokens.get(newKey);
+  t.el.classList.add("mint");
+  if(isNew) t.el.classList.add("mint-ring");
+  const mintTier = tierOf(BY_ID.get(resultId));
+  const mintDur = mintTier==="mythic" ? 1400 : mintTier==="legendary" ? 1100 : 720;
+  setTimeout(()=>t.el.classList.remove("mint","mint-ring"), mintDur);
+
+  if(isNew){
+    const now = Date.now();
+    streak = (now-lastDiscoverAt < 4000) ? streak+1 : 1;
+    lastDiscoverAt = now;
+
+    discovered.add(resultId);
+    persist();
+    renderLedger();
+
+    const result = BY_ID.get(resultId);
+    if(result.person) showReveal(resultId);
+    else toast({id:resultId});
+  }
+}
+
+/* =========================================================
+   TOOLBAR
+========================================================= */
+document.getElementById("clearBtn").addEventListener("click", ()=>{ [...tokens.keys()].forEach(removeToken); });
+
+document.getElementById("resetBtn").addEventListener("click", ()=>{
+  if(!confirm("Reset all progress? This clears every icon you've discovered.")) return;
+  discovered = new Set(BASE_IDS);
+  persist();
+  [...tokens.keys()].forEach(removeToken);
+  renderLedger();
+});
+
+document.getElementById("shareBtn").addEventListener("click", async ()=>{
+  const people = PERSONS.filter(p=>discovered.has(p.id)).length;
+  const text = `I've forged ${people}/${PERSONS.length} historical icons on Icon's Recipe. Can you beat me?`;
+  try{ await navigator.clipboard.writeText(text); toast({locked:true, text:"Copied your progress to clipboard!"}); }
+  catch(e){ toast({locked:true, text:text}); }
+});
+
+document.getElementById("searchInput").addEventListener("input",(ev)=>{ searchTerm = ev.target.value; renderLedger(); });
+ledgerToggle.addEventListener("click", ()=> ledgerEl.classList.toggle("open") );
+
+/* =========================================================
+   INIT
+========================================================= */
+buildTabs();
+renderLedger();
+updateEmptyState();
+
+if(discovered.size===BASE_IDS.length){
+  const rect = surfaceEl.getBoundingClientRect();
+  const w = rect.width || 800, h = rect.height || 500;
+  const cx = w/2, cy = h/2;
+  const spots = [[-90,-46],[90,-46],[-90,46],[90,46]];
+  BASE_IDS.forEach((id,i)=> placeToken(id, cx+spots[i][0], cy+spots[i][1]) );
+}
+
+})();
+</script>
+
